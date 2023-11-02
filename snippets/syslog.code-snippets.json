@@ -61,7 +61,33 @@
 			"}"
 		],
 		"description": "Function for creating a backtrace in c"
-	}
+	},
 
+	"Signal function": {
+		"prefix": "signal_function",
+		"body": [
+			"#include <execinfo.h>",
+			"#include <signal.h>",
+			"#include <stdio.h>",
+			"#include <stdlib.h>",
+			"#include <syslog.h>",
+			"/* Obtain a backtrace and print it to stdout. */",
+			"static void print_signal_trace (int) {",
+			"    void *array[10];",
+			"    int size = backtrace (array, 10);",
+			"    char **strings = backtrace_symbols (array, size);",
+			"    if (strings != NULL) {",
+			"        syslog(LOG_ERR, \"[euan][trace]: Obtained %d stack frames.\", size);",
+			"        for (int i = 0; i < size; i++) {",
+			"            syslog(LOG_ERR, \"[euan][trace]: frame: %d, function: %s\", i, strings[i]);",
+			"        }",
+			"    }",
+			"    free (strings);",
+			"}",
+			"// Place this in main loop:",
+			"//signal(SIGSEGV, print_signal_trace);"
+		],
+		"description": "Function for creating a backtrace on signal in c"
+	}
 
 }
