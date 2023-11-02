@@ -1,0 +1,67 @@
+{
+	"Syslog line information": {
+		"prefix": "syslog",
+		"body": [
+			"$3syslog(LOG_ERR, \"[euan] %s, %s, %s, %s, %d$1\", __DATE__, __TIME__, __FILE__, __FUNCTION__, __LINE__$2);"
+		],
+		"description": "Log line information to syslog"
+	},
+
+	"Kernel print message": {
+		"prefix": "printk",
+		"body": [
+			"printk(KERN_ALERT \"DEBUG_MSG: %s, %s, %d$1\", __FILE__, __FUNCTION__, __LINE__$2);"
+		],
+		"description": "Log line information to dmesg.  Note using the __DATE__ and __TIME__ marcos requires -Wno-error=date-time in the top level makefile"
+	},
+
+	"Custom log line information": {
+		"prefix": "log_err",
+		"body": [
+			"log_err(\"[euan] %s, %s, %s, %s, %d$1\", __DATE__, __TIME__, __FILE__, __FUNCTION__, __LINE__$2);"
+		],
+		"description": "Log line information to syslog"
+	},
+
+	"Python shebang": {
+		"prefix": "pysh",
+		"body": [
+			"#!/usr/bin/env python3"
+		],
+		"description": "Python3 shebang to be placed at the top of python scripts"
+	},
+
+	"Bash shebang": {
+		"prefix": "bash",
+		"body": [
+			"#!/usr/bin/env bash"
+		],
+		"description": "Bash shebang to be placed at the top of bash scripts"
+	},
+
+	"Backtrace function": {
+		"prefix": "backtrace_function",
+		"body": [
+			"#include <execinfo.h>",
+			"#include <stdio.h>",
+			"#include <stdlib.h>",
+			"#include <syslog.h>",
+			"/* Obtain a backtrace and print it to stdout. */",
+			"static void print_trace (void) {",
+			"    void *array[10];",
+			"    int size = backtrace (array, 10);",
+			"    char **strings = backtrace_symbols (array, size);",
+			"    if (strings != NULL) {",
+			"        syslog(LOG_ERR, \"[euan][trace]: Obtained %d stack frames.\", size);",
+			"        for (int i = 0; i < size; i++) {",
+			"            syslog(LOG_ERR, \"[euan][trace]: frame: %d, function: %s\", i, strings[i]);",
+			"        }",
+			"    }",
+			"    free (strings);",
+			"}"
+		],
+		"description": "Function for creating a backtrace in c"
+	}
+
+
+}

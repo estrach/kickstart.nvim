@@ -1,0 +1,17 @@
+{
+  "name": "snippets",
+  "version": "1.0.0",
+  "description": "Vscode snippets for neovim",
+  "engines": {
+    "vscode": "^1.11.0"
+  },
+  "author": "euan.strachan",
+  "contributes": {
+    "snippets": [
+      {
+        "language": ["all"],
+        "path": "./syslog.code-snippets.json"
+      }
+    ]
+  }
+}
