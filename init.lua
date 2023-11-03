@@ -109,6 +109,7 @@ require('lazy').setup({
 
   { 'nvim-tree/nvim-web-devicons', lazy = true },
 
+  -- Multi cursor edit
   { 'mg979/vim-visual-multi' },
 
   {
@@ -118,6 +119,9 @@ require('lazy').setup({
       },
       lazy = false,
   },
+
+  -- Table mode
+  { 'dhruvasagar/vim-table-mode' },
 
   {
     -- Autocompletion
