@@ -102,11 +102,11 @@ require('lazy').setup({
     },
   },
 
+  -- File browser
   {
     'nvim-tree/nvim-tree.lua',
     -- 'neoclide/coc.nvim'
   },
-
   { 'nvim-tree/nvim-web-devicons', lazy = true },
 
   -- Multi cursor edit
@@ -118,6 +118,16 @@ require('lazy').setup({
           -- add any options here
       },
       lazy = false,
+  },
+
+  -- Box draw
+  { 'gyim/vim-boxdraw' },
+
+  -- Detour: open temporary browsing popup window
+  { "carbon-steel/detour.nvim",
+    config = function ()
+       vim.keymap.set('n', '<c-w><enter>', ":Detour<cr>")
+   end
   },
 
   -- Table mode
