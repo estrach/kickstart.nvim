@@ -272,6 +272,11 @@ require('lazy').setup({
   -- { import = 'custom.plugins' },
 }, {})
 
+-- Set the default shell to PowerShell on windows only
+if vim.fn.has('win32') == 1 then
+    vim.o.shell = 'powershell.exe'
+end
+
 -- Disable inline errors
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
