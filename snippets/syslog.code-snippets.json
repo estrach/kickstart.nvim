@@ -88,6 +88,14 @@
 			"//signal(SIGSEGV, print_signal_trace);"
 		],
 		"description": "Function for creating a backtrace on signal in c"
+	},
+	"Python arguments parser": {
+		"prefix": "pyargs",
+		"body": [
+			"import argparse",
+			"parser = argparse.ArgumentParser(prog='$1', description='$2')",
+			"parser.add_argument('$3', type=$4str, help='$5')"
+		],
+		"descriptions": "Outline for python arguments"
 	}
-
 }
