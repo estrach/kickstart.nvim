@@ -40,13 +40,13 @@ Clone kickstart.nvim:
 
 ```sh
 # on Linux and Mac
-git clone https://github.com/nvim-lua/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+git clone https://github.com/estrach/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim && cd "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim && git switch euan/main
 ```
 
 
 ```
 # on Windows
-git clone https://github.com/nvim-lua/kickstart.nvim.git %userprofile%\AppData\Local\nvim\ 
+git clone https://github.com/estrach/kickstart.nvim.git %userprofile%\AppData\Local\nvim\ && cd "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim && git switch euan/main
 ```
 
 ### Post Installation
@@ -176,3 +176,10 @@ This requires:
 {'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 ```
 
+### WSL Installation
+
+Installation may require installing additional packages which are not part of the default WSL installation.
+
+```
+sudo apt-get install ninja-build gettext cmake unzip curl ripgrep && git clone https://github.com/neovim/neovim.git ~/neovim && cd ~/neovim && git checkout v0.9.1 && make CMAKE_BUILD_TYPE=Release && sudo make install
+```
