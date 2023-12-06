@@ -103,10 +103,7 @@ require('lazy').setup({
   },
 
   -- File browser
-  {
-    'nvim-tree/nvim-tree.lua',
-    -- 'neoclide/coc.nvim'
-  },
+  { 'nvim-tree/nvim-tree.lua', },
   { 'nvim-tree/nvim-web-devicons', lazy = true },
 
   -- Multi cursor edit
@@ -296,10 +293,7 @@ vim.opt.listchars:append{trail = "~"}
 vim.opt.listchars:append{tab = ">-"}
 vim.opt.listchars:append{nbsp = "␣"}
 
--- empty setup using defaults
-require("nvim-tree").setup()
-
--- OR setup with some options
+-- Nvimtree setup with options
 require("nvim-tree").setup({
   sort_by = "case_sensitive",
   view = {
@@ -312,6 +306,8 @@ require("nvim-tree").setup({
     dotfiles = true,
   },
 })
+vim.api.nvim_set_keymap('n', '<leader>f', ':NvimTreeToggle<CR>',
+  { noremap = true, silent = true, desc = '[f] Toggle the file browser' })
 
 -- Enable tree-sitter context
 require'treesitter-context'.setup{
