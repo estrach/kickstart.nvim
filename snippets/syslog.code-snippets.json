@@ -39,6 +39,14 @@
 		"description": "Bash shebang to be placed at the top of bash scripts"
 	},
 
+	"Log date stamp": {
+		"prefix": "datestamp",
+		"body": [
+			"${CURRENT_YEAR/(.*)\\d\\d/${1}/}${CURRENT_MONTH}${CURRENT_DATE}:"
+		],
+		"description": "Insert a date stamp in the form YYMMDD:"
+	},
+
 	"Backtrace function": {
 		"prefix": "backtrace_function",
 		"body": [
