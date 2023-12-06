@@ -149,5 +149,21 @@
 			"charset = utf-8"
 		],
 		"description": "Default settings for the contents of an `.editorconfig` file"
+	},
+	"Time since start up": {
+		"prefix": "uptime",
+		"body": [
+			"#include <iostream>",
+			"#include <sys/sysinfo.h>",
+			"",
+			"long int get_uptime() {",
+			"    struct sysinfo sys_info;",
+			"    if(sysinfo(&sys_info) != 0){",
+			"        return -1;",
+			"    }",
+			"    return sys_info.uptime;",
+			"}"
+		],
+		"description": "Function for getting the uptime in seconds"
 	}
 }
