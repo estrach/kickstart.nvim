@@ -383,6 +383,10 @@ vim.api.nvim_set_keymap('n', '<C-K>', [[<Cmd>let @* = join([expand('%'),  line("
 vim.api.nvim_set_keymap('n', '<leader>n', ':set nu!<CR>',
   { noremap = true, silent = true, desc = 'Toggle line [n]umbers' })
 
+-- Add keymap for show/hide whitespace
+vim.api.nvim_set_keymap('n', '<leader>l', ':set list!<CR>',
+  { noremap = true, silent = true, desc = '[l] Toggle whitespace' })
+
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
