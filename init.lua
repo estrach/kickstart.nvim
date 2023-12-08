@@ -307,7 +307,7 @@ require("nvim-tree").setup({
   },
 })
 vim.api.nvim_set_keymap('n', '<leader>f', ':NvimTreeToggle<CR>',
-  { noremap = true, silent = true, desc = '[f] Toggle the file browser' })
+  { noremap = true, silent = true, desc = 'Toggle the [f]ile browser' })
 
 -- Enable tree-sitter context
 require'treesitter-context'.setup{
@@ -376,7 +376,7 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
--- Add keymap for copy current file path and line number to the "a" register
+-- Add keymap for copy current file path and line number to the global clipboard
 vim.api.nvim_set_keymap('n', '<C-K>', [[<Cmd>let @* = join([expand('%'),  line(".")], ':')<CR>]], {noremap = true, silent = true})
 
 -- [[ Highlight on yank ]]
@@ -390,7 +390,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
--- [[ Trim trailing whitespace ]]
+-- [[ Trim trailing whitespace on save ]]
 vim.api.nvim_exec([[
     autocmd BufWritePre * :%s/\s\+$//e
     ]], false)
