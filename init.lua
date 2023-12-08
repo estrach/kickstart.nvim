@@ -379,6 +379,10 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 -- Add keymap for copy current file path and line number to the global clipboard
 vim.api.nvim_set_keymap('n', '<C-K>', [[<Cmd>let @* = join([expand('%'),  line(".")], ':')<CR>]], {noremap = true, silent = true})
 
+-- Add keymap for show/hide line numbers
+vim.api.nvim_set_keymap('n', '<leader>n', ':set nu!<CR>',
+  { noremap = true, silent = true, desc = 'Toggle line [n]umbers' })
+
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
