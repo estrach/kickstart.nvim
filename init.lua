@@ -500,6 +500,14 @@ vim.defer_fn(function()
   }
 end, 0)
 
+-- Git keymaps
+vim.api.nvim_set_keymap('n', '<leader>gb', ':Git blame<CR>',
+  { noremap = true, silent = true, desc = 'Git [b]lame' })
+vim.api.nvim_set_keymap('n', '<leader>gs', ':Git<CR>',
+  { noremap = true, silent = true, desc = 'Git [s]tatus' })
+vim.api.nvim_set_keymap('n', '<leader>gd', ':Gdiffsplit<CR>',
+  { noremap = true, silent = true, desc = 'Git [d]iff tool' })
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
