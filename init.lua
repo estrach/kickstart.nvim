@@ -378,7 +378,7 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 
 -- Add keymap for copy current file path and line number to the global clipboard
 vim.api.nvim_set_keymap('n', '<leader>k', [[<Cmd>let @* = join([expand('%'),  line(".")], ':')<CR>]],
-  { desc = '[k] Copy filename and line number', noremap = true, silent = true })
+  { desc = 'Copy filename and line number', noremap = true, silent = true })
 
 -- Add keymap for show/hide line numbers
 vim.api.nvim_set_keymap('n', '<leader>n', ':set nu!<CR>',
@@ -386,7 +386,7 @@ vim.api.nvim_set_keymap('n', '<leader>n', ':set nu!<CR>',
 
 -- Add keymap for show/hide whitespace
 vim.api.nvim_set_keymap('n', '<leader>l', ':set list!<CR>',
-  { noremap = true, silent = true, desc = '[l] Toggle whitespace' })
+  { noremap = true, silent = true, desc = 'Toggle whitespace' })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
