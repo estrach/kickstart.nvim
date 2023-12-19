@@ -388,6 +388,12 @@ vim.api.nvim_set_keymap('n', '<leader>n', ':set nu!<CR>',
 vim.api.nvim_set_keymap('n', '<leader>l', ':set list!<CR>',
   { noremap = true, silent = true, desc = 'Toggle whitespace' })
 
+-- Add keymaps for set fold methods
+vim.api.nvim_set_keymap('n', '<leader>zi', ':set foldmethod=indent<CR>',
+  { noremap = true, silent = true, desc = 'Set fold method indent' })
+vim.api.nvim_set_keymap('n', '<leader>zm', ':set foldmethod=manual<CR>',
+  { noremap = true, silent = true, desc = 'Set fold method manual' })
+
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
