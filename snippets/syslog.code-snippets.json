@@ -39,6 +39,14 @@
 		"description": "Bash shebang to be placed at the top of bash scripts"
 	},
 
+	"Python main": {
+		"prefix": "pymain",
+		"body": [
+			"if __name__==\"__main__\":"
+		],
+		"description": "Python main function"
+	},
+
 	"Log date stamp": {
 		"prefix": "datestamp",
 		"body": [
