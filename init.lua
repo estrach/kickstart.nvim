@@ -146,6 +146,15 @@ require('lazy').setup({
     },
   },
 
+  -- Add doxygen support
+  {
+    "danymat/neogen",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    config = true,
+    -- Uncomment next line if you want to follow only stable versions
+    -- version = "*"
+  },
+
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim', opts = {} },
   {
@@ -393,6 +402,10 @@ vim.api.nvim_set_keymap('n', '<leader>zi', ':set foldmethod=indent<CR>',
   { noremap = true, silent = true, desc = 'Set fold method indent' })
 vim.api.nvim_set_keymap('n', '<leader>zm', ':set foldmethod=manual<CR>',
   { noremap = true, silent = true, desc = 'Set fold method manual' })
+
+-- Add doxygen keymaps
+local opts = { noremap = true, silent = true, desc = 'Add doxygen comments'}
+vim.api.nvim_set_keymap("n", "<Leader>dc", ":lua require('neogen').generate()<CR>", opts)
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
