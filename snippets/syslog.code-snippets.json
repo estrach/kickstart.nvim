@@ -48,7 +48,7 @@
 	},
 
 	"Log date stamp": {
-		"prefix": "datestamp",
+		"prefix": "print_datestamp",
 		"body": [
 			"${CURRENT_YEAR/(.*)\\d\\d/${1}/}${CURRENT_MONTH}${CURRENT_DATE}:"
 		],
