@@ -170,5 +170,21 @@
 			"}"
 		],
 		"description": "Function for getting the uptime in seconds"
+	},
+	"Loop log": {
+		"prefix": "loop_log",
+		"body": [
+			"auto monitor_time = std::chrono::steady_clock::now() + std::chrono::seconds(10);",
+			"auto interval = std::chrono::seconds(1);",
+			"auto whereami = [&monitor_time, &interval](const char* filename, const char* function_name, int line_number){",
+			"    auto now = std::chrono::steady_clock::now();",
+			"    if ((now - monitor_time) > interval) {",
+			"        log_err(\"whereami: %s, %s, %d\", filename, function_name, line_number);",
+			"        monitor_time = now;",
+			"    }",
+			"};",
+			"whereami(__FILE__, __FUNCTION__, __LINE__);"
+		],
+		"description": "Lambda function for creating a logging thread"
 	}
 }
