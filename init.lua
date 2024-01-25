@@ -534,6 +534,8 @@ vim.api.nvim_set_keymap('n', '<leader>gb', ':Git blame<CR>',
 vim.keymap.set('n', '<leader>gs', require('telescope.builtin').git_status, { desc = 'Search [G]it [S]status' })
 vim.api.nvim_set_keymap('n', '<leader>gd', ':Gdiffsplit<CR>',
   { noremap = true, silent = true, desc = 'Git [d]iff tool' })
+vim.api.nvim_set_keymap('n', '<leader>gl', ':Git log<CR>',
+  { noremap = true, silent = true, desc = 'Git [l]og' })
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
