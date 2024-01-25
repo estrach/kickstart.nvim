@@ -531,8 +531,7 @@ end, 0)
 -- Git keymaps
 vim.api.nvim_set_keymap('n', '<leader>gb', ':Git blame<CR>',
   { noremap = true, silent = true, desc = 'Git [b]lame' })
-vim.api.nvim_set_keymap('n', '<leader>gs', ':Git<CR>',
-  { noremap = true, silent = true, desc = 'Git [s]tatus' })
+vim.keymap.set('n', '<leader>gs', require('telescope.builtin').git_status, { desc = 'Search [G]it [S]status' })
 vim.api.nvim_set_keymap('n', '<leader>gd', ':Gdiffsplit<CR>',
   { noremap = true, silent = true, desc = 'Git [d]iff tool' })
 
