@@ -185,6 +185,6 @@
 			"};",
 			"whereami(__FILE__, __FUNCTION__, __LINE__);"
 		],
-		"description": "Lambda function for creating a logging thread"
+		"description": "Lambda function for logging current position every 10s"
 	}
 }
