@@ -155,6 +155,12 @@ require('lazy').setup({
     -- version = "*"
   },
 
+  -- Add formatting supports
+  { 'sbdchd/neoformat' },
+
+  -- Add linting support
+  { 'dense-analysis/ale' },
+
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim', opts = {} },
   {
