@@ -458,12 +458,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
--- [[ Trim trailing whitespace on save ]]
-vim.api.nvim_exec([[
-    autocmd BufWritePre * :%s/\s\+$//e
-    ]], false)
-
-
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
