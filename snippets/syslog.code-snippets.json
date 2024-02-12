@@ -251,5 +251,15 @@
 			"} // ConvertToMessage(__DATE__, __TIME__, __FILE__, __FUNCTION__, __LINE__);"
 		],
 		"description": "Log only after a timeout has exceeded"
+	},
+	"C++ Define Header Guard": {
+		"prefix": "header_guard",
+		"body": [
+			"#ifndef __$1_H__",
+			"#define __$1_H__",
+			"$2",
+			"#endif // __$1_H__"
+		],
+		"description": "Header guards for C++ header files"
 	}
 }
