@@ -447,6 +447,12 @@ vim.api.nvim_set_keymap('n', '<leader>zm', ':set foldmethod=manual<CR>',
 local opts = { noremap = true, silent = true, desc = 'Add doxygen comments'}
 vim.api.nvim_set_keymap("n", "<Leader>dc", ":lua require('neogen').generate()<CR>", opts)
 
+vim.api.nvim_set_keymap('n', '<leader>dl', ':ALEToggle<CR>',
+  { noremap = true, silent = true, desc = 'Toggle the [l]inter' })
+
+vim.api.nvim_set_keymap('n', '<leader>df', ':Neoformat<CR>',
+  { noremap = true, silent = true, desc = 'Format the document' })
+
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
