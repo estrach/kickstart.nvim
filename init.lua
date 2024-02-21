@@ -453,6 +453,12 @@ vim.api.nvim_set_keymap('n', '<leader>dl', ':ALEToggle<CR>',
 vim.api.nvim_set_keymap('n', '<leader>df', ':Neoformat<CR>',
   { noremap = true, silent = true, desc = 'Format the document' })
 
+vim.api.nvim_set_keymap('n', '<leader>de', ':bufdo e!<CR>',
+  { noremap = true, silent = true, desc = 'Reload all open buffers' })
+
+vim.api.nvim_set_keymap('n', '<leader>dw', ':bufdo w!<CR>',
+  { noremap = true, silent = true, desc = 'Write all open buffers' })
+
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
