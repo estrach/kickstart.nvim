@@ -131,6 +131,16 @@ require('lazy').setup({
   { 'dhruvasagar/vim-table-mode' },
 
   {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+  },
+
+  {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
     dependencies = {
@@ -457,6 +467,9 @@ vim.api.nvim_set_keymap('n', '<leader>de', ':bufdo e!<CR>',
   { noremap = true, silent = true, desc = 'Reload all open buffers' })
 
 vim.api.nvim_set_keymap('n', '<leader>dw', ':bufdo w!<CR>',
+  { noremap = true, silent = true, desc = 'Write all open buffers' })
+
+vim.api.nvim_set_keymap('n', '<leader>dq', ':TodoQuickFix<CR>',
   { noremap = true, silent = true, desc = 'Write all open buffers' })
 
 -- [[ Highlight on yank ]]
