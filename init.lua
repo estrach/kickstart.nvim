@@ -469,8 +469,8 @@ vim.api.nvim_set_keymap('n', '<leader>de', ':bufdo e!<CR>',
 vim.api.nvim_set_keymap('n', '<leader>dw', ':bufdo w!<CR>',
   { noremap = true, silent = true, desc = 'Write all open buffers' })
 
-vim.api.nvim_set_keymap('n', '<leader>dq', ':TodoQuickFix<CR>',
-  { noremap = true, silent = true, desc = 'Write all open buffers' })
+vim.api.nvim_set_keymap('n', '<leader>dt', ':TodoQuickFix<CR>',
+  { noremap = true, silent = true, desc = 'Open todo list' })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
