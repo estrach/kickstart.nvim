@@ -232,8 +232,8 @@ require('lazy').setup({
       options = {
         icons_enabled = true,
         theme = 'auto',
-        component_separators =  { left = '', right = ''},
-        section_separators = { left = '', right = ''},
+        component_separators =  { left = '', right = ''},
+        section_separators = { left = '', right = ''},
         disabled_filetypes = {
           statusline = {},
           winbar = {},
@@ -383,6 +383,12 @@ require'treesitter-context'.setup{
   zindex = 20, -- The Z-index of the context window
   on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
 }
+
+-- Catppuccin setup
+require("catppuccin").setup({
+    flavour = "mocha",
+})
+vim.cmd.colorscheme "catppuccin"
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
