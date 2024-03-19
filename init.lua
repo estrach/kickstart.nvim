@@ -480,6 +480,7 @@ vim.api.nvim_set_keymap('n', '<leader>dt', ':TodoQuickFix<CR>',
 
 -- Highlight the currently selected line
 vim.opt.cursorline = true
+vim.opt.cursorlineopt = 'number'
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
