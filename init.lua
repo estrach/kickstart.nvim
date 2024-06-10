@@ -450,7 +450,7 @@ vim.api.nvim_set_keymap('n', '<leader>n', ':set nu!<CR>',
   { noremap = true, silent = true, desc = 'Toggle line [n]umbers' })
 
 -- Add keymap for show/hide whitespace
-vim.api.nvim_set_keymap('n', '<leader>l', ':set list!<CR>',
+vim.api.nvim_set_keymap('n', '<leader>lw', ':set list!<CR>',
   { noremap = true, silent = true, desc = 'Toggle whitespace' })
 
 -- Add keymaps for set fold methods
