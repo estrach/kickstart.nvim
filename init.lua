@@ -491,6 +491,15 @@ vim.api.nvim_set_keymap('n', '<leader>lm', ':colorscheme catppuccin-mocha<CR>',
 vim.api.nvim_set_keymap('n', '<leader>j', '<c-w>s<c-w>j<c-w>J:terminal<CR>',
   { noremap = true, silent = true, desc = 'Open terminal buffer' })
 
+vim.api.nvim_set_keymap('n', ']b', ':bn<CR>',
+  { noremap = true, silent = true, desc = 'Next buffer' })
+
+vim.api.nvim_set_keymap('n', '[b', ':bp<CR>',
+  { noremap = true, silent = true, desc = 'Previous buffer' })
+
+vim.api.nvim_set_keymap('n', '<leader>b', ':Telescope buffers<CR>',
+  { noremap = true, silent = true, desc = 'Browse buffers' })
+
 -- Highlight the currently selected line
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = 'number'
