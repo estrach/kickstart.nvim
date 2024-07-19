@@ -488,6 +488,9 @@ vim.api.nvim_set_keymap('n', '<leader>la', ':colorscheme catppuccin-latte<CR>',
 vim.api.nvim_set_keymap('n', '<leader>lm', ':colorscheme catppuccin-mocha<CR>',
   { noremap = true, silent = true, desc = 'Dark colorscheme' })
 
+vim.api.nvim_set_keymap('n', '<leader>j', '<c-w>s<c-w>j<c-w>J:terminal<CR>',
+  { noremap = true, silent = true, desc = 'Open terminal buffer' })
+
 -- Highlight the currently selected line
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = 'number'
