@@ -56,7 +56,7 @@
 	},
 
 	"Backtrace function": {
-		"prefix": "backtrace_function",
+		"prefix": "bkf",
 		"body": [
 			"#include <execinfo.h>",
 			"#include <stdio.h>",
@@ -80,7 +80,7 @@
 	},
 
 	"Signal function": {
-		"prefix": "signal_function",
+		"prefix": "sif",
 		"body": [
 			"#include <execinfo.h>",
 			"#include <signal.h>",
