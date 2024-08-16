@@ -171,6 +171,8 @@ require('lazy').setup({
     -- version = "*"
   },
 
+  { 'editorconfig/editorconfig-vim' },
+
   -- Add formatting supports
   { 'sbdchd/neoformat' },
 
