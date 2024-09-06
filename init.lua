@@ -501,9 +501,6 @@ vim.api.nvim_set_keymap('n', ']b', ':bn<CR>',
 vim.api.nvim_set_keymap('n', '[b', ':bp<CR>',
   { noremap = true, silent = true, desc = 'Previous buffer' })
 
-vim.api.nvim_set_keymap('n', '<leader>b', ':Telescope buffers<CR>',
-  { noremap = true, silent = true, desc = 'Browse buffers' })
-
 -- Highlight the currently selected line
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = 'number'
