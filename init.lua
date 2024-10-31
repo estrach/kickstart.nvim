@@ -503,6 +503,12 @@ vim.api.nvim_set_keymap('n', ']b', ':bn<CR>',
 vim.api.nvim_set_keymap('n', '[b', ':bp<CR>',
   { noremap = true, silent = true, desc = 'Previous buffer' })
 
+vim.api.nvim_set_keymap('n', ']w', '/^\\d\\{6\\}:<CR>',
+  { noremap = true, silent = true, desc = 'Next datestamp' })
+
+vim.api.nvim_set_keymap('n', '[w', '?^\\d\\{6\\}:<CR>',
+  { noremap = true, silent = true, desc = 'Previous datestamp' })
+
 -- Highlight the currently selected line
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = 'number'
@@ -692,6 +698,8 @@ wk.add({
   {'<leader>r', desc = '[R]ename' },
   {'<leader>s', desc = '[S]earch' },
   {'<leader>w', desc = '[W]orkspace' },
+  {']w', desc = 'Next datestamp' },
+  {'[w', desc = 'Previous datestamp' },
 })
 
 -- mason-lspconfig requires that these setup functions are called in this order
