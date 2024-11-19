@@ -47,13 +47,6 @@
 		"description": "Python main function"
 	},
 
-	"Log date stamp": {
-		"prefix": "print_datestamp",
-		"body": [
-			"${CURRENT_YEAR/(.*)\\d\\d/${1}/}${CURRENT_MONTH}${CURRENT_DATE}:"
-		],
-		"description": "Insert a date stamp in the form YYMMDD:"
-	},
 	"Editor config default": {
 		"prefix": "editor_config",
 		"body": [
