@@ -442,6 +442,16 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 
 -- [[ Basic Keymaps ]]
+local wk = require('which-key')
+wk.add({
+  {'<leader>c', desc = '[C]ode' },
+  {'<leader>d', desc = '[D]ocument' },
+  {'<leader>g', desc = '[G]it' },
+  {'<leader>h', desc = 'More git' },
+  {'<leader>r', desc = '[R]ename' },
+  {'<leader>s', desc = '[S]earch' },
+  {'<leader>w', desc = '[W]orkspace' }
+})
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
@@ -503,23 +513,40 @@ vim.api.nvim_set_keymap('n', ']b', ':bn<CR>',
 vim.api.nvim_set_keymap('n', '[b', ':bp<CR>',
   { noremap = true, silent = true, desc = 'Previous buffer' })
 
-vim.api.nvim_set_keymap('n', ']w', '/^\\d\\{6\\}:<CR>',
-  { noremap = true, silent = true, desc = 'Next datestamp' })
+vim.api.nvim_create_augroup('FileTypeKeybindings', { clear = true })
+vim.api.nvim_create_autocmd('FileType', {
+  group = 'FileTypeKeybindings',
+  pattern = {'text', 'markdown'},
+  callback = function()
+    vim.api.nvim_buf_set_keymap(0, 'n', ']w', '/^\\d\\{6\\}:<CR>',
+      { noremap = true, silent = true, desc = 'Next datestamp' })
 
-vim.api.nvim_set_keymap('n', '[w', '?^\\d\\{6\\}:<CR>',
-  { noremap = true, silent = true, desc = 'Previous datestamp' })
+    vim.api.nvim_buf_set_keymap(0, 'n', '[w', '?^\\d\\{6\\}:<CR>',
+      { noremap = true, silent = true, desc = 'Previous datestamp' })
 
-vim.api.nvim_set_keymap('n', ']t', '/^\\#\\# [A-Z0-9]\\+-[0-9]\\+<CR>',
-  { noremap = true, silent = true, desc = 'Next ticket' })
+    vim.api.nvim_buf_set_keymap(0, 'n', ']t', '/^\\#\\# [A-Z0-9]\\+-[0-9]\\+<CR>',
+      { noremap = true, silent = true, desc = 'Next ticket' })
 
-vim.api.nvim_set_keymap('n', '[t', '?^\\#\\# [A-Z0-9]\\+-[0-9]\\+<CR>',
-  { noremap = true, silent = true, desc = 'Previous ticket' })
+    vim.api.nvim_buf_set_keymap(0, 'n', '[t', '?^\\#\\# [A-Z0-9]\\+-[0-9]\\+<CR>',
+      { noremap = true, silent = true, desc = 'Previous ticket' })
 
-vim.api.nvim_set_keymap('n', ']h', '/^\\#\\+\\s<CR>',
-  { noremap = true, silent = true, desc = 'Next heading' })
+    vim.api.nvim_buf_set_keymap(0, 'n', ']h', '/^\\#\\+\\s<CR>',
+      { noremap = true, silent = true, desc = 'Next heading' })
 
-vim.api.nvim_set_keymap('n', '[h', '?^\\#\\+\\s<CR>',
-  { noremap = true, silent = true, desc = 'Previous heading' })
+    vim.api.nvim_buf_set_keymap(0, 'n', '[h', '?^\\#\\+\\s<CR>',
+      { noremap = true, silent = true, desc = 'Previous heading' })
+
+    -- document existing key chains
+    wk.add({
+      {']w', desc = 'Next datestamp' },
+      {'[w', desc = 'Previous datestamp' },
+      {']t', desc = 'Next ticket' },
+      {'[t', desc = 'Previous ticket' },
+      {']h', desc = 'Next heading' },
+      {'[h', desc = 'Previous heading' },
+    })
+  end
+})
 
 -- Highlight the currently selected line
 vim.opt.cursorline = true
@@ -699,24 +726,6 @@ local on_attach = function(_, bufnr)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
 end
-
--- document existing key chains
-local wk = require('which-key')
-wk.add({
-  {'<leader>c', desc = '[C]ode' },
-  {'<leader>d', desc = '[D]ocument' },
-  {'<leader>g', desc = '[G]it' },
-  {'<leader>h', desc = 'More git' },
-  {'<leader>r', desc = '[R]ename' },
-  {'<leader>s', desc = '[S]earch' },
-  {'<leader>w', desc = '[W]orkspace' },
-  {']w', desc = 'Next datestamp' },
-  {'[w', desc = 'Previous datestamp' },
-  {']t', desc = 'Next ticket' },
-  {'[t', desc = 'Previous ticket' },
-  {']h', desc = 'Next heading' },
-  {'[h', desc = 'Previous heading' },
-})
 
 -- mason-lspconfig requires that these setup functions are called in this order
 -- before setting up the servers.
