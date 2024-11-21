@@ -519,10 +519,10 @@ vim.api.nvim_create_autocmd('FileType', {
   group = 'FileTypeKeybindings',
   pattern = {'text', 'markdown'},
   callback = function()
-    vim.api.nvim_buf_set_keymap(0, 'n', ']w', '/^\\d\\{6\\}:<CR>',
+    vim.api.nvim_buf_set_keymap(0, 'n', ']w', '/^\\d\\{6\\}:\\|^\\# \\d\\{6\\}<CR>',
       { noremap = true, silent = true, desc = 'Next datestamp' })
 
-    vim.api.nvim_buf_set_keymap(0, 'n', '[w', '?^\\d\\{6\\}:<CR>',
+    vim.api.nvim_buf_set_keymap(0, 'n', '[w', '?^\\d\\{6\\}:\\|^\\# \\d\\{6\\}<CR>',
       { noremap = true, silent = true, desc = 'Previous datestamp' })
 
     vim.api.nvim_buf_set_keymap(0, 'n', ']t', '/^\\#\\# [A-Z0-9]\\+-[0-9]\\+<CR>',
