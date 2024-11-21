@@ -513,6 +513,7 @@ vim.api.nvim_set_keymap('n', ']b', ':bn<CR>',
 vim.api.nvim_set_keymap('n', '[b', ':bp<CR>',
   { noremap = true, silent = true, desc = 'Previous buffer' })
 
+-- text and markdown specific keybindings
 vim.api.nvim_create_augroup('FileTypeKeybindings', { clear = true })
 vim.api.nvim_create_autocmd('FileType', {
   group = 'FileTypeKeybindings',
