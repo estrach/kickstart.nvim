@@ -3,6 +3,7 @@ local s = ls.snippet
 local t = ls.text_node
 local f = ls.function_node
 local i = ls.insert_node
+local fmt = require("luasnip.extras.fmt").fmt
 
 local function current_date()
   return os.date("%y%m%d")
@@ -57,14 +58,13 @@ ls.add_snippets("editorconfig", {
 })
 
 local syslog_snippet = {
-  s("syslog", {
-    i(3),
-    t('syslog(LOG_ERR, "[euan] %s, %s, %s, %s, %d'),
-    i(1),
-    t('", __DATE__, __TIME__, __FILE__, __FUNCTION__, __LINE__'),
-    i(2),
-    t(');'),
-  }),
+  s("syslog", fmt(
+    [[
+    syslog(LOG_ERR, "[euan] %s, %s, %s, %s, %d{}", __DATE__, __TIME__, __FILE__, __FUNCTION__, __LINE__{});
+    ]], {
+      i(1), i(0)
+    })
+  )
 }
 ls.add_snippets("cpp", syslog_snippet)
 ls.add_snippets("c", syslog_snippet)
