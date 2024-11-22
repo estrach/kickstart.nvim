@@ -2,6 +2,7 @@ local ls = require('luasnip')
 local s = ls.snippet
 local t = ls.text_node
 local f = ls.function_node
+local i = ls.insert_node
 
 local function current_date()
   return os.date("%y%m%d")
@@ -51,6 +52,17 @@ ls.add_snippets("all", {
         "[{package.json,.travis.yml}]",
         "indent_style = space",
         "indent_size = 2"
-    })
-  })
+    }),
+  }),
+})
+
+ls.add_snippets("all", {
+  s("syslog", {
+    i(3),
+    t('syslog(LOG_ERR, "[euan] %s, %s, %s, %s, %d'),
+    i(1),
+    t('", __DATE__, __TIME__, __FILE__, __FUNCTION__, __LINE__'),
+    i(2),
+    t(');'),
+  }),
 })

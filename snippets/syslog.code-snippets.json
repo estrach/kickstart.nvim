@@ -1,12 +1,4 @@
 {
-	"Syslog line information": {
-		"prefix": "syslog",
-		"body": [
-			"$3syslog(LOG_ERR, \"[euan] %s, %s, %s, %s, %d$1\", __DATE__, __TIME__, __FILE__, __FUNCTION__, __LINE__$2);"
-		],
-		"description": "Log line information to syslog"
-	},
-
 	"Kernel print message": {
 		"prefix": "printk",
 		"body": [
