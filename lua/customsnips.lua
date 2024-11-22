@@ -56,7 +56,7 @@ ls.add_snippets("all", {
   }),
 })
 
-ls.add_snippets("all", {
+local syslog_snippet = {
   s("syslog", {
     i(3),
     t('syslog(LOG_ERR, "[euan] %s, %s, %s, %s, %d'),
@@ -65,4 +65,6 @@ ls.add_snippets("all", {
     i(2),
     t(');'),
   }),
-})
+}
+ls.add_snippets("cpp", syslog_snippet)
+ls.add_snippets("c", syslog_snippet)
