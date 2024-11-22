@@ -15,7 +15,7 @@ ls.add_snippets("all", {
   })
 })
 
-ls.add_snippets("all", {
+ls.add_snippets("editorconfig", {
   s("editor_config", {
 			t({"# EditorConfig is awesome: https://EditorConfig.org",
         "",
