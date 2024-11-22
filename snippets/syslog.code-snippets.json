@@ -1,20 +1,4 @@
 {
-	"Kernel print message": {
-		"prefix": "printk",
-		"body": [
-			"printk(KERN_ALERT \"DEBUG_MSG: %s, %s, %d$1\", __FILE__, __FUNCTION__, __LINE__$2);"
-		],
-		"description": "Log line information to dmesg.  Note using the __DATE__ and __TIME__ marcos requires -Wno-error=date-time in the top level makefile"
-	},
-
-	"Custom log line information": {
-		"prefix": "log_err",
-		"body": [
-			"log_err(\"[euan] %s, %s, %s, %s, %d$1\", __DATE__, __TIME__, __FILE__, __FUNCTION__, __LINE__$2);"
-		],
-		"description": "Log line information to syslog"
-	},
-
 	"Python shebang": {
 		"prefix": "pysh",
 		"body": [

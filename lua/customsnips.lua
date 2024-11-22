@@ -72,7 +72,7 @@ local syslog_snippet = s("syslog", fmt(
       c(3, {
         t('syslog(LOG_ERR, '),
         t('log_err('),
-        t('printk(KERN_ALERT ')
+        t('printk(KERN_ALERT ') -- TODO: printk needs to remove __DATE__ and __TIME__
       }),
       i(1),
       i(2)
