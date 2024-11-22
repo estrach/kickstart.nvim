@@ -3,7 +3,15 @@ local s = ls.snippet
 local t = ls.text_node
 local f = ls.function_node
 local i = ls.insert_node
+local c = ls.choice_node
 local fmt = require("luasnip.extras.fmt").fmt
+
+local ls = require("luasnip")
+vim.keymap.set({"i", "s"}, "<C-E>", function()
+    if ls.choice_active() then
+        ls.change_choice(1)
+    end
+end, {silent = true})
 
 local function current_date()
   return os.date("%y%m%d")
@@ -57,14 +65,19 @@ ls.add_snippets("editorconfig", {
   }),
 })
 
-local syslog_snippet = {
-  s("syslog", fmt(
+local syslog_snippet = s("syslog", fmt(
     [[
-    syslog(LOG_ERR, "[euan] %s, %s, %s, %s, %d{}", __DATE__, __TIME__, __FILE__, __FUNCTION__, __LINE__{});
+    {}"[euan] %s, %s, %s, %s, %d{}", __DATE__, __TIME__, __FILE__, __FUNCTION__, __LINE__{});
     ]], {
-      i(1), i(0)
-    })
-  )
-}
-ls.add_snippets("cpp", syslog_snippet)
-ls.add_snippets("c", syslog_snippet)
+      c(3, {
+        t('syslog(LOG_ERR, '),
+        t('log_err('),
+        t('printk(KERN_ALERT ')
+      }),
+      i(1),
+      i(2)
+    }
+))
+
+ls.add_snippets("cpp", { syslog_snippet })
+ls.add_snippets("c", { syslog_snippet })
