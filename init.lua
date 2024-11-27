@@ -553,6 +553,20 @@ vim.api.nvim_create_autocmd('FileType', {
   end
 })
 
+local original_filetype = ''
+function TogglePlaintext()
+  if vim.bo.filetype == 'none' then
+    vim.bo.filetype = original_filetype
+  else
+    original_filetype = vim.bo.filetype
+    vim.bo.filetype = 'none'
+  end
+end
+
+vim.api.nvim_create_user_command('TogglePlaintext', TogglePlaintext, {})
+vim.api.nvim_buf_set_keymap(0, 'n', '<leader>ls', ':TogglePlaintext<CR>',
+  { noremap = true, silent = true, desc = 'Toggle plain text' })
+
 -- Highlight the currently selected line
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = 'number'
