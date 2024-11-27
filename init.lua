@@ -469,6 +469,10 @@ vim.api.nvim_set_keymap('n', '<leader>k', [[<Cmd>let @* = join([expand('%'),  li
 vim.api.nvim_set_keymap('n', '<leader>n', ':set nu!<CR>',
   { noremap = true, silent = true, desc = 'Toggle line [n]umbers' })
 
+-- Add keymap for toggle relative line numbers
+vim.api.nvim_set_keymap('n', '<leader>m', ':set relativenumber!<CR>',
+  { noremap = true, silent = true, desc = 'Toggle relative line nu[m]bers' })
+
 -- Add keymap for show/hide whitespace
 vim.api.nvim_set_keymap('n', '<leader>lw', ':set list!<CR>',
   { noremap = true, silent = true, desc = 'Toggle whitespace' })
