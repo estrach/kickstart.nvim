@@ -502,12 +502,6 @@ vim.api.nvim_set_keymap('n', '<leader>dw', ':bufdo w!<CR>',
 vim.api.nvim_set_keymap('n', '<leader>dt', ':TodoQuickFix<CR>',
   { noremap = true, silent = true, desc = 'Open todo list' })
 
-vim.api.nvim_set_keymap('n', '<leader>la', ':colorscheme catppuccin-latte<CR>',
-  { noremap = true, silent = true, desc = 'Light colorscheme' })
-
-vim.api.nvim_set_keymap('n', '<leader>lm', ':colorscheme catppuccin-mocha<CR>',
-  { noremap = true, silent = true, desc = 'Dark colorscheme' })
-
 vim.api.nvim_set_keymap('n', '<leader>j', '<c-w>s<c-w>j<c-w>J:terminal<CR>',
   { noremap = true, silent = true, desc = 'Open terminal buffer' })
 
@@ -553,6 +547,7 @@ vim.api.nvim_create_autocmd('FileType', {
   end
 })
 
+-- Function for turning off editor features
 local original_filetype = ''
 function TogglePlaintext()
   if vim.bo.filetype == 'none' then
@@ -566,6 +561,18 @@ end
 vim.api.nvim_create_user_command('TogglePlaintext', TogglePlaintext, {})
 vim.api.nvim_buf_set_keymap(0, 'n', '<leader>ls', ':TogglePlaintext<CR>',
   { noremap = true, silent = true, desc = 'Toggle plain text' })
+
+-- Change colorscheme
+function ToggleColorScheme()
+  if vim.g.colors_name == 'catppuccin-mocha' then
+    vim.cmd('colorscheme catppuccin-latte')
+  else
+    vim.cmd('colorscheme catppuccin-mocha')
+  end
+end
+vim.api.nvim_create_user_command('ToggleColorScheme', ToggleColorScheme, {})
+vim.api.nvim_set_keymap('n', '<leader>la', ':ToggleColorScheme<CR>',
+  { noremap = true, silent = true, desc = 'Toggle colorscheme' })
 
 -- Highlight the currently selected line
 vim.opt.cursorline = true
