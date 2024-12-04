@@ -19,8 +19,8 @@ end
 
 ls.add_snippets("all", {
   s("print_datestamp", {
-    f(current_date, {}),
-    t(":")
+    t("# "),
+    f(current_date, {})
   })
 })
 
