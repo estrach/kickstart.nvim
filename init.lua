@@ -477,6 +477,10 @@ vim.api.nvim_set_keymap('n', '<leader>m', ':set relativenumber!<CR>',
 vim.api.nvim_set_keymap('n', '<leader>lw', ':set list!<CR>',
   { noremap = true, silent = true, desc = 'Toggle whitespace' })
 
+-- Add keymap for display file as syslog
+vim.api.nvim_set_keymap('n', '<leader>lm', ':set filetype=messages<CR>',
+  { noremap = true, silent = true, desc = 'Syslog syntax highlight' })
+
 -- Add keymaps for set fold methods
 vim.api.nvim_set_keymap('n', '<leader>zi', ':set foldmethod=indent<CR>',
   { noremap = true, silent = true, desc = 'Set fold method indent' })
