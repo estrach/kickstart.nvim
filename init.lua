@@ -71,7 +71,11 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Set view guard around top and bottom of the buffer (5 lines)
 vim.opt.scrolloff = 5
+
+-- Default to relative line numbers
+vim.opt.relativenumber = true
 
 -- NOTE: Here is where you install your plugins.
 --  You can configure plugins using the `config` key.
