@@ -563,7 +563,7 @@ function TogglePlaintext()
 end
 
 vim.api.nvim_create_user_command('TogglePlaintext', TogglePlaintext, {})
-vim.api.nvim_buf_set_keymap(0, 'n', '<leader>ls', ':TogglePlaintext<CR>',
+vim.api.nvim_set_keymap('n', '<leader>ls', ':TogglePlaintext<CR>',
   { noremap = true, silent = true, desc = 'Toggle plain text' })
 
 -- Change colorscheme
