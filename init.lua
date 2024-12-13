@@ -556,16 +556,6 @@ vim.api.nvim_create_autocmd('FileType', {
 
     vim.api.nvim_buf_set_keymap(0, 'n', '[h', '?^\\#\\+\\s<CR>',
       { noremap = true, silent = true, desc = 'Previous heading' })
-
-    -- document existing key chains
-    wk.add({
-      {']w', desc = 'Next datestamp' },
-      {'[w', desc = 'Previous datestamp' },
-      {']t', desc = 'Next ticket' },
-      {'[t', desc = 'Previous ticket' },
-      {']h', desc = 'Next heading' },
-      {'[h', desc = 'Previous heading' },
-    })
   end
 })
 
