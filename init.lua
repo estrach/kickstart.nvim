@@ -509,6 +509,24 @@ vim.api.nvim_set_keymap('n', '<leader>dt', ':TodoQuickFix<CR>',
 vim.api.nvim_set_keymap('n', '<leader>j', '<c-w>s<c-w>j<c-w>J:terminal<CR>',
   { noremap = true, silent = true, desc = 'Open terminal buffer' })
 
+-- Document navigation keymaps
+
+_G.find_duplicate = function(search_direction)
+  local current_line = vim.fn.getline(".")
+  local lnum = vim.fn.search(current_line, search_direction)
+  if lnum > 0 then
+    print("Line repeat found at line: " .. lnum)
+  else
+    print("No line repeats found")
+  end
+end
+
+vim.api.nvim_set_keymap('n', ']r', ':lua _G.find_duplicate("W")<CR>',
+  { noremap = true, silent = true, desc = 'Next line repeat' })
+
+vim.api.nvim_set_keymap('n', '[r', ':lua _G.find_duplicate("bW")<CR>',
+  { noremap = true, silent = true, desc = 'Previous line repeat' })
+
 vim.api.nvim_set_keymap('n', ']b', ':bn<CR>',
   { noremap = true, silent = true, desc = 'Next buffer' })
 
@@ -577,19 +595,6 @@ end
 vim.api.nvim_create_user_command('ToggleColorScheme', ToggleColorScheme, {})
 vim.api.nvim_set_keymap('n', '<leader>la', ':ToggleColorScheme<CR>',
   { noremap = true, silent = true, desc = 'Toggle colorscheme' })
-
-_G.find_duplicate = function(search_direction)
-  local current_line = vim.fn.getline(".")
-  local lnum = vim.fn.search(current_line, search_direction)
-  if lnum > 0 then
-    print("Duplicate found at line: " .. lnum)
-  else
-    print("No duplicates found")
-  end
-end
-
-vim.api.nvim_set_keymap('n', '[r', ':lua _G.find_duplicate("bW")<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', ']r', ':lua _G.find_duplicate("W")<CR>', { noremap = true, silent = true })
 
 -- Highlight the currently selected line
 vim.opt.cursorline = true
