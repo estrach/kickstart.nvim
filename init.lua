@@ -588,8 +588,8 @@ _G.find_duplicate = function(search_direction)
   end
 end
 
-vim.api.nvim_set_keymap('n', '<leader>dn', ':lua _G.find_duplicate("bW")<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>dm', ':lua _G.find_duplicate("W")<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '[r', ':lua _G.find_duplicate("bW")<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', ']r', ':lua _G.find_duplicate("W")<CR>', { noremap = true, silent = true })
 
 -- Highlight the currently selected line
 vim.opt.cursorline = true
