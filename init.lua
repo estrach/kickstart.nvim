@@ -578,7 +578,7 @@ vim.api.nvim_create_user_command('ToggleColorScheme', ToggleColorScheme, {})
 vim.api.nvim_set_keymap('n', '<leader>la', ':ToggleColorScheme<CR>',
   { noremap = true, silent = true, desc = 'Toggle colorscheme' })
 
-_G.find_previous_duplicate = function(search_direction)
+_G.find_duplicate = function(search_direction)
   local current_line = vim.fn.getline(".")
   local lnum = vim.fn.search(current_line, search_direction)
   if lnum > 0 then
@@ -588,7 +588,7 @@ _G.find_previous_duplicate = function(search_direction)
   end
 end
 
-vim.api.nvim_set_keymap('n', '<leader>dn', ':lua _G.find_previous_duplicate("bW")<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>dn', ':lua _G.find_duplicate("bW")<CR>', { noremap = true, silent = true })
 
 -- Highlight the currently selected line
 vim.opt.cursorline = true
