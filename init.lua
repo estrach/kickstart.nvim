@@ -514,9 +514,14 @@ vim.api.nvim_set_keymap('n', '<leader>j', '<c-w>s<c-w>j<c-w>J:terminal<CR>',
   { noremap = true, silent = true, desc = 'Open terminal buffer' })
 
 -- Document navigation keymaps
-
+_G.last_searched_line = nil
 _G.find_duplicate = function(search_direction)
   local current_line = vim.fn.getline(".")
+  if _G.last_searched_line and string.find(current_line, _G.last_searched_line, 1, true) then
+    current_line = _G.last_searched_line
+  else
+    _G.last_searched_line = current_line
+  end
   local lnum = vim.fn.search(current_line, search_direction)
   if lnum > 0 then
     print("Line repeat found at line: " .. lnum)
