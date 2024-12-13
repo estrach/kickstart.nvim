@@ -556,6 +556,12 @@ vim.api.nvim_create_autocmd('FileType', {
 
     vim.api.nvim_buf_set_keymap(0, 'n', '[h', '?^\\#\\+\\s<CR>',
       { noremap = true, silent = true, desc = 'Previous heading' })
+
+    vim.api.nvim_buf_set_keymap(0, 'n', ']e', '/```$<CR>',
+      { noremap = true, silent = true, desc = 'Code block end' })
+
+    vim.api.nvim_buf_set_keymap(0, 'n', '[e', '?```\\w\\+$<CR>',
+      { noremap = true, silent = true, desc = 'Code block start' })
   end
 })
 
