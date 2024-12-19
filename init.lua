@@ -92,6 +92,8 @@ require('lazy').setup({
   'tpope/vim-surround',
   'sindrets/diffview.nvim',
 
+  'wsdjeg/vim-fetch',
+
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
