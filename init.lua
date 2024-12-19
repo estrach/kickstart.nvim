@@ -515,6 +515,15 @@ vim.api.nvim_set_keymap('n', '<leader>dt', ':TodoQuickFix<CR>',
 vim.api.nvim_set_keymap('n', '<leader>j', '<c-w>s<c-w>j<c-w>J:terminal<CR>',
   { noremap = true, silent = true, desc = 'Open terminal buffer' })
 
+vim.api.nvim_set_keymap('n', '<leader>bd', ':bd!<CR>',
+  { noremap = true, silent = true, desc = 'Close current buffer' })
+
+vim.api.nvim_set_keymap('n', '<leader>bn', ':e ~/sandbox/Notepad/Notepad.md<CR>',
+  { noremap = true, silent = true, desc = 'Open Notepad' })
+
+vim.api.nvim_set_keymap('n', '<leader>lr', ':set wrap!<CR>',
+  { noremap = true, silent = true, desc = 'Toggle wrap' })
+
 -- Document navigation keymaps
 _G.last_searched_line = nil
 _G.find_duplicate = function(search_direction)
