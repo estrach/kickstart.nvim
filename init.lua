@@ -541,6 +541,36 @@ _G.find_duplicate = function(search_direction)
   end
 end
 
+function FoldCodeBlocks()
+  -- Get the current cursor position
+  local current_line = vim.fn.line('.')
+
+  -- Search forwards for the next "```"
+  local end_line = vim.fn.search('^```$', 'n')
+  if end_line == 0 then
+    print("No ending marker found")
+    return
+  end
+
+  -- Go to the end line and search backwards for the previous "```\\w"
+  vim.fn.cursor(end_line, 0)
+  local start_line = vim.fn.search('^```\\w', 'bn')
+  if start_line == 0 then
+    print("No starting marker found")
+    return
+  end
+
+  -- Set the fold
+  print("Folding lines: " .. start_line .. ", " .. end_line)
+  vim.cmd(start_line .. ',' .. end_line .. 'fold')
+
+  -- Move the cursor back to the original position
+  vim.fn.cursor(current_line, 0)
+end
+
+-- Create a Vim command to call the function
+vim.api.nvim_create_user_command('FoldCodeBlocks', FoldCodeBlocks, {})
+
 vim.api.nvim_set_keymap('n', ']r', ':lua _G.find_duplicate("W")<CR>',
   { noremap = true, silent = true, desc = 'Next line repeat' })
 
@@ -582,6 +612,9 @@ vim.api.nvim_create_autocmd('FileType', {
 
     vim.api.nvim_buf_set_keymap(0, 'n', '[e', '?```\\w\\+$<CR>',
       { noremap = true, silent = true, desc = 'Code block start' })
+
+    vim.api.nvim_buf_set_keymap(0, 'n', 'lc', ':FoldCodeBlocks<CR>',
+      { noremap = true, silent = true, desc = 'Fold code block' })
   end
 })
 
