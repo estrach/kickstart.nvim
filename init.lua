@@ -613,7 +613,7 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.api.nvim_buf_set_keymap(0, 'n', '[e', '?```\\w\\+$<CR>',
       { noremap = true, silent = true, desc = 'Code block start' })
 
-    vim.api.nvim_buf_set_keymap(0, 'n', 'lc', ':FoldCodeBlocks<CR>',
+    vim.api.nvim_buf_set_keymap(0, 'n', 'zF', ':FoldCodeBlocks<CR>',
       { noremap = true, silent = true, desc = 'Fold code block' })
   end
 })
