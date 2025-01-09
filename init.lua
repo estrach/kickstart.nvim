@@ -541,7 +541,7 @@ _G.find_duplicate = function(search_direction)
   end
 end
 
-function FoldCodeBlocks()
+function FoldCodeBlock()
   -- Get the current cursor position
   local current_line = vim.fn.line('.')
 
@@ -569,7 +569,7 @@ function FoldCodeBlocks()
 end
 
 -- Create a Vim command to call the function
-vim.api.nvim_create_user_command('FoldCodeBlocks', FoldCodeBlocks, {})
+vim.api.nvim_create_user_command('FoldCodeBlock', FoldCodeBlock, {})
 
 function YankCodeBlock()
   -- Get the current cursor position
@@ -646,7 +646,7 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.api.nvim_buf_set_keymap(0, 'n', '[e', '?```\\w\\+$<CR>',
       { noremap = true, silent = true, desc = 'Code block start' })
 
-    vim.api.nvim_buf_set_keymap(0, 'n', 'zF', ':FoldCodeBlocks<CR>',
+    vim.api.nvim_buf_set_keymap(0, 'n', 'zF', ':FoldCodeBlock<CR>',
       { noremap = true, silent = true, desc = 'Fold code block' })
 
     vim.api.nvim_buf_set_keymap(0, 'n', 'yc', ':YankCodeBlock<CR>',
