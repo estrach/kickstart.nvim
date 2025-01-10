@@ -595,7 +595,7 @@ function YankCodeBlock()
 
   -- Set the fold
   print("Yanking lines: " .. start_line .. ", " .. end_line)
-  vim.cmd(start_line .. ',' .. end_line .. 'y')
+  vim.cmd(start_line .. ',' .. end_line .. 'y +')
 
   -- Move the cursor back to the original position
   vim.fn.cursor(current_line, 0)
