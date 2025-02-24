@@ -593,7 +593,7 @@ function YankCodeBlock()
   start_line = start_line + 1
   end_line = end_line - 1
 
-  -- Set the fold
+  -- Yank the lines
   print("Yanking lines: " .. start_line .. ", " .. end_line)
   vim.cmd(start_line .. ',' .. end_line .. 'y +')
 
