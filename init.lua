@@ -667,6 +667,11 @@ vim.api.nvim_set_keymap('n', '[l', ':lua _G.GotoNextFile(-1)<CR>',
 vim.api.nvim_set_keymap('n', ']l', ':lua _G.GotoNextFile(1)<CR>',
   { noremap = true, silent = true, desc = 'Open next file' })
 
+-- TODO:
+-- -[x] Navigate to next previous file
+-- -[ ] Bring up telescope find for all matches to the current line
+-- -[ ] Create a new file with the current date stamp and header this file (do this only if it does not already exist, otherwise open it)
+
 -- /WIP
 
 vim.api.nvim_set_keymap('n', ']r', ':lua _G.find_duplicate("W")<CR>',
