@@ -637,28 +637,35 @@ vim.api.nvim_create_user_command('VisualCodeBlock', VisualCodeBlock, {})
 -- WIP
 
 
-function PrintTopLine()
+_G.GotoNextFile = function(jump)
   -- Get the current file name
   local full_path = vim.api.nvim_buf_get_name(0)
   local current_filename = vim.fn.fnamemodify(full_path, ":t")
 
-  print('Current file name: ' .. current_filename)
-
   local i, t, popen = 0, {}, io.popen
   local pfile = popen('ls .')
-  local j = 1
+  local j = 0
   for filename in pfile:lines() do
     i = i + 1
     t[i] = filename
     if t[i] == current_filename then
-      print("bingo!")
       j = i
     end
   end
-  vim.api.nvim_command('e ' .. t[j - 1])
+  file_idx = j + jump
+  if file_idx >= #t then
+    file_idx = #t
+  end
+  if file_idx < 0 then
+    file_idx = 0
+  end
+  vim.api.nvim_command('e ' .. t[file_idx])
 end
 
-vim.api.nvim_create_user_command('PrintTopLine', PrintTopLine, {})
+vim.api.nvim_set_keymap('n', '[l', ':lua _G.GotoNextFile(-1)<CR>',
+  { noremap = true, silent = true, desc = 'Open previous file' })
+vim.api.nvim_set_keymap('n', ']l', ':lua _G.GotoNextFile(1)<CR>',
+  { noremap = true, silent = true, desc = 'Open next file' })
 
 -- /WIP
 
