@@ -638,30 +638,26 @@ vim.api.nvim_create_user_command('VisualCodeBlock', VisualCodeBlock, {})
 
 
 function PrintTopLine()
-    local topLine = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1]
+  -- Get the current file name
+  local full_path = vim.api.nvim_buf_get_name(0)
+  local current_filename = vim.fn.fnamemodify(full_path, ":t")
 
-    is_date = topLine:match('^# %d%d%d%d%d%d')
+  print('Current file name: ' .. current_filename)
 
-    if is_date then
-        date = string.sub(is_date, 3)
-        print("Date: " .. date)
-    else
-        print("Buffer is empty.")
-    return
+  local i, t, popen = 0, {}, io.popen
+  local pfile = popen('ls .')
+  local j = 1
+  for filename in pfile:lines() do
+    i = i + 1
+    t[i] = filename
+    if t[i] == current_filename then
+      print("bingo!")
+      j = i
     end
-
-      local i, t, popen = 0, {}, io.popen
-    local pfile = popen('ls .')
-    for filename in pfile:lines() do
-        i = i + 1
-        t[i] = filename
-        print(t[i])
-        if t[i] == date .. ".md" then
-          print("bingo!")
-          end
-    end
-
+  end
+  vim.api.nvim_command('e ' .. t[j - 1])
 end
+
 vim.api.nvim_create_user_command('PrintTopLine', PrintTopLine, {})
 
 -- /WIP
