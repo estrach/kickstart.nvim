@@ -486,6 +486,7 @@ vim.api.nvim_set_keymap('n', '<leader>lw', ':set list!<CR>',
 -- Add keymap for display file as syslog
 vim.api.nvim_set_keymap('n', '<leader>lm', ':set filetype=messages<CR>',
   { noremap = true, silent = true, desc = 'Syslog syntax highlight' })
+vim.api.nvim_command('autocmd BufRead,BufNewFile *.log set filetype=messages')
 
 -- Add keymaps for set fold methods
 vim.api.nvim_set_keymap('n', '<leader>zi', ':set foldmethod=indent<CR>',
@@ -518,8 +519,8 @@ vim.api.nvim_set_keymap('n', '<leader>j', '<c-w>s<c-w>j<c-w>J:terminal<CR>',
 vim.api.nvim_set_keymap('n', '<leader>bd', ':bd!<CR>',
   { noremap = true, silent = true, desc = 'Close current buffer' })
 
-vim.api.nvim_set_keymap('n', '<leader>bn', ':e ~/sandbox/Notepad/Notepad.md<CR>',
-  { noremap = true, silent = true, desc = 'Open Notepad' })
+-- vim.api.nvim_set_keymap('n', '<leader>bn', ':e ~/sandbox/Notepad/Notepad.md<CR>',
+--   { noremap = true, silent = true, desc = 'Open Notepad' })
 
 vim.api.nvim_set_keymap('n', '<leader>lr', ':set wrap!<CR>',
   { noremap = true, silent = true, desc = 'Toggle wrap' })
@@ -633,6 +634,99 @@ end
 -- Create a Vim command to call the function
 vim.api.nvim_create_user_command('VisualCodeBlock', VisualCodeBlock, {})
 
+-- Navigate to next/previous file
+_G.GotoNextFile = function(jump)
+  local full_path = vim.api.nvim_buf_get_name(0)
+  local current_filename = vim.fn.fnamemodify(full_path, ":t")
+
+  local i, t, popen = 0, {}, io.popen
+  local pfile = popen('ls .')
+  local j = 0
+  for filename in pfile:lines() do
+    i = i + 1
+    t[i] = filename
+    if t[i] == current_filename then
+      j = i
+    end
+  end
+  file_idx = j + jump
+  if file_idx >= #t then
+    file_idx = #t
+  end
+  if file_idx < 0 then
+    file_idx = 0
+  end
+  vim.api.nvim_command('e ' .. t[file_idx])
+end
+vim.api.nvim_set_keymap('n', '[f', ':lua _G.GotoNextFile(-1)<CR>',
+  { noremap = true, silent = true, desc = 'Open previous file' })
+vim.api.nvim_set_keymap('n', ']f', ':lua _G.GotoNextFile(1)<CR>',
+  { noremap = true, silent = true, desc = 'Open next file' })
+_G.GotoFileIndex = function(index)
+  local i, t, popen = 0, {}, io.popen
+  local pfile = popen('ls .')
+  for filename in pfile:lines() do
+    print(filename .. " " .. i .. " " .. index)
+    if i == index then
+      vim.api.nvim_command('e ' .. filename)
+      return
+    end
+    i = i + 1
+  end
+end
+vim.api.nvim_set_keymap('n', '<leader>bm', ':lua _G.GotoFileIndex(0)<CR>',
+  { noremap = true, silent = true, desc = 'Open first file' })
+
+-- Search for the current line in all files in the working directory and place
+-- the results in the quick fix list
+function SearchCurrentLine()
+  local current_line = vim.fn.getline(".")
+  local current_filename = vim.api.nvim_buf_get_name(0)
+  require('telescope.builtin').live_grep{
+      additional_args = function()
+          return { '--sort-files' }
+      end,
+      default_text = current_line,
+
+      -- Send the results to the quick fix list on close with RETURN
+      attach_mappings = function(prompt_bufnr, map)
+        local function send_to_qflist_and_close()
+          require('telescope.actions').send_to_qflist(prompt_bufnr)
+          local qflist = vim.fn.getqflist()
+          print("current file path: " .. current_filename)
+          local target_idx = 1
+          for i, item in ipairs(qflist) do
+            if item.module then
+              local item_filename = vim.fn.bufname(item.bufnr)
+              if item_filename:match(current_filename) then
+                print("current file path: " .. current_filename .. " found file path: " .. item_filename .. " index: " .. i)
+                target_idx = i
+                break
+              end
+            end
+          end
+          vim.fn.setqflist({}, 'r', { items = qflist, idx = target_idx })
+          vim.cmd('cclose')
+        end
+        map('i', '<CR>', send_to_qflist_and_close)
+        map('n', '<CR>', send_to_qflist_and_close)
+        return true
+      end
+  }
+end
+vim.api.nvim_create_user_command('SearchCurrentLine', SearchCurrentLine, {})
+vim.api.nvim_set_keymap('n', '<leader>lf', ':SearchCurrentLine<CR>',
+  { noremap = true, silent = true, desc = 'Next line repeat' })
+
+-- Create a new file with the current date stamp and header this file (do this
+-- only if it does not already exist, otherwise open it)
+function OpenTodaysNotepad()
+  vim.api.nvim_command('e ~/sandbox/Notepad/Notes/' .. os.date("%y%m%d") .. ".md")
+end
+vim.api.nvim_create_user_command('OpenTodaysNotepad', OpenTodaysNotepad, {})
+vim.api.nvim_set_keymap('n', '<leader>bn', ':OpenTodaysNotepad<CR>',
+  { noremap = true, silent = true, desc = 'Next line repeat' })
+
 vim.api.nvim_set_keymap('n', ']r', ':lua _G.find_duplicate("W")<CR>',
   { noremap = true, silent = true, desc = 'Next line repeat' })
 
@@ -644,6 +738,12 @@ vim.api.nvim_set_keymap('n', ']b', ':bn<CR>',
 
 vim.api.nvim_set_keymap('n', '[b', ':bp<CR>',
   { noremap = true, silent = true, desc = 'Previous buffer' })
+
+vim.api.nvim_set_keymap('n', ']q', ':cn<CR>',
+  { noremap = true, silent = true, desc = 'Next quick fix item' })
+
+vim.api.nvim_set_keymap('n', '[q', ':cp<CR>',
+  { noremap = true, silent = true, desc = 'Previous quick fix item' })
 
 -- text and markdown specific keybindings
 vim.api.nvim_create_augroup('FileTypeKeybindings', { clear = true })
