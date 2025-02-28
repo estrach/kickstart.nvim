@@ -633,6 +633,39 @@ end
 -- Create a Vim command to call the function
 vim.api.nvim_create_user_command('VisualCodeBlock', VisualCodeBlock, {})
 
+
+-- WIP
+
+
+function PrintTopLine()
+    local topLine = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1]
+
+    is_date = topLine:match('^# %d%d%d%d%d%d')
+
+    if is_date then
+        date = string.sub(is_date, 3)
+        print("Date: " .. date)
+    else
+        print("Buffer is empty.")
+    return
+    end
+
+      local i, t, popen = 0, {}, io.popen
+    local pfile = popen('ls .')
+    for filename in pfile:lines() do
+        i = i + 1
+        t[i] = filename
+        print(t[i])
+        if t[i] == date .. ".md" then
+          print("bingo!")
+          end
+    end
+
+end
+vim.api.nvim_create_user_command('PrintTopLine', PrintTopLine, {})
+
+-- /WIP
+
 vim.api.nvim_set_keymap('n', ']r', ':lua _G.find_duplicate("W")<CR>',
   { noremap = true, silent = true, desc = 'Next line repeat' })
 
