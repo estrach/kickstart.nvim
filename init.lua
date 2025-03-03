@@ -669,18 +669,29 @@ vim.api.nvim_set_keymap('n', ']l', ':lua _G.GotoNextFile(1)<CR>',
 
 -- Bring up telescope find for all matches to the current line
 -- Use `:Telescope live_grep default_text=#\ 241128`.  Note current line needs to be escaped.
--- This will escape an exact string: `str:gsub("([^%w])", "%%%1")`
+-- This will escape an exact string for use in lua: `str:gsub("([^%w])", "%%%1")`
+-- Note: there are some additional characters in vim which we do not want to escape (e.g. `:`) add these to the ignored non escaped list.
+function SearchCurrentLine()
+  local current_line = vim.fn.getline(".")
+  local escaped_current_line = current_line:gsub("([^%w:])", "\\%1")
+  vim.api.nvim_command('Telescope live_grep default_text=' .. escaped_current_line)
+end
+vim.api.nvim_create_user_command('SearchCurrentLine', SearchCurrentLine, {})
+vim.api.nvim_set_keymap('n', '<leader>lf', ':SearchCurrentLine<CR>',
+  { noremap = true, silent = true, desc = 'Next line repeat' })
 
 -- Create a new file with the current date stamp and header this file (do this only if it does not already exist, otherwise open it)
 function OpenTodaysNotepad()
-  vim.api.nvim_command('e ' .. os.date("%y%m%d") .. ".md")
+  vim.api.nvim_command('e ~/sandbox/Notepad/Notes/' .. os.date("%y%m%d") .. ".md")
 end
 vim.api.nvim_create_user_command('OpenTodaysNotepad', OpenTodaysNotepad, {})
+-- vim.api.nvim_set_keymap('n', '<leader>bn', ':OpenTodaysNotepad<CR>',
+--   { noremap = true, silent = true, desc = 'Next line repeat' })
 
 
 -- TODO:
 -- -[x] Navigate to next previous file
--- -[ ] Bring up telescope find for all matches to the current line
+-- -[x] Bring up telescope find for all matches to the current line
 -- -[x] Create a new file with the current date stamp and header this file (do this only if it does not already exist, otherwise open it)
 
 -- /WIP
