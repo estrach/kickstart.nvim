@@ -636,7 +636,7 @@ vim.api.nvim_create_user_command('VisualCodeBlock', VisualCodeBlock, {})
 
 -- WIP
 
-
+-- Navigate to next/previous file
 _G.GotoNextFile = function(jump)
   -- Get the current file name
   local full_path = vim.api.nvim_buf_get_name(0)
@@ -667,10 +667,21 @@ vim.api.nvim_set_keymap('n', '[l', ':lua _G.GotoNextFile(-1)<CR>',
 vim.api.nvim_set_keymap('n', ']l', ':lua _G.GotoNextFile(1)<CR>',
   { noremap = true, silent = true, desc = 'Open next file' })
 
+-- Bring up telescope find for all matches to the current line
+-- Use `:Telescope live_grep default_text=#\ 241128`.  Note current line needs to be escaped.
+-- This will escape an exact string: `str:gsub("([^%w])", "%%%1")`
+
+-- Create a new file with the current date stamp and header this file (do this only if it does not already exist, otherwise open it)
+function OpenTodaysNotepad()
+  vim.api.nvim_command('e ' .. os.date("%y%m%d") .. ".md")
+end
+vim.api.nvim_create_user_command('OpenTodaysNotepad', OpenTodaysNotepad, {})
+
+
 -- TODO:
 -- -[x] Navigate to next previous file
 -- -[ ] Bring up telescope find for all matches to the current line
--- -[ ] Create a new file with the current date stamp and header this file (do this only if it does not already exist, otherwise open it)
+-- -[x] Create a new file with the current date stamp and header this file (do this only if it does not already exist, otherwise open it)
 
 -- /WIP
 
