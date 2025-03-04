@@ -671,10 +671,21 @@ vim.api.nvim_set_keymap('n', ']l', ':lua _G.GotoNextFile(1)<CR>',
 -- Use `:Telescope live_grep default_text=#\ 241128`.  Note current line needs to be escaped.
 -- This will escape an exact string for use in lua: `str:gsub("([^%w])", "%%%1")`
 -- Note: there are some additional characters in vim which we do not want to escape (e.g. `:`) add these to the ignored non escaped list.
+-- TODO: This should search in the previous files.
+
 function SearchCurrentLine()
   local current_line = vim.fn.getline(".")
-  local escaped_current_line = current_line:gsub("([^%w:])", "\\%1")
-  vim.api.nvim_command('Telescope live_grep default_text=' .. escaped_current_line)
+  require('telescope.builtin').live_grep{
+      additional_args = function()
+          return { '--sort-files' }
+      end,
+      -- attach_mappings = function(_, map)
+      --   map('i', '<C-q>', require('telescope.actions').send_to_qflist)
+      --   map('n', '<C-q>', require('telescope.actions').send_to_qflist + require('telescope.actions').open_qflist)
+      --   return true
+      -- end,
+      default_text = current_line
+  }
 end
 vim.api.nvim_create_user_command('SearchCurrentLine', SearchCurrentLine, {})
 vim.api.nvim_set_keymap('n', '<leader>lf', ':SearchCurrentLine<CR>',
