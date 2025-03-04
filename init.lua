@@ -675,6 +675,7 @@ vim.api.nvim_set_keymap('n', ']l', ':lua _G.GotoNextFile(1)<CR>',
 
 function SearchCurrentLine()
   local current_line = vim.fn.getline(".")
+  local full_path = vim.api.nvim_buf_get_name(0)
   require('telescope.builtin').live_grep{
       additional_args = function()
           return { '--sort-files' }
@@ -685,6 +686,20 @@ function SearchCurrentLine()
       attach_mappings = function(prompt_bufnr, map)
         local function send_to_qflist_and_close()
           require('telescope.actions').send_to_qflist(prompt_bufnr)
+          local qflist = vim.fn.getqflist()
+          print("current file path: " .. full_path)
+          local target_idx = 1
+          for i, item in ipairs(qflist) do
+            if item.module then
+              local filename = vim.fn.bufname(item.bufnr)
+              if filename:match(full_path) then
+                print("current file path: " .. full_path .. " found file path: " .. filename .. " index: " .. i)
+                target_idx = i
+                break
+              end
+            end
+          end
+          vim.fn.setqflist({}, 'r', { items = qflist, idx = target_idx })
           vim.cmd('cclose')
         end
         map('i', '<CR>', send_to_qflist_and_close)
