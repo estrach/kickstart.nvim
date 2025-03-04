@@ -679,12 +679,18 @@ function SearchCurrentLine()
       additional_args = function()
           return { '--sort-files' }
       end,
-      -- attach_mappings = function(_, map)
-      --   map('i', '<C-q>', require('telescope.actions').send_to_qflist)
-      --   map('n', '<C-q>', require('telescope.actions').send_to_qflist + require('telescope.actions').open_qflist)
-      --   return true
-      -- end,
-      default_text = current_line
+      default_text = current_line,
+
+      -- Send the results to the quick fix list on close with RETURN
+      attach_mappings = function(prompt_bufnr, map)
+        local function send_to_qflist_and_close()
+          require('telescope.actions').send_to_qflist(prompt_bufnr)
+          vim.cmd('cclose')
+        end
+        map('i', '<CR>', send_to_qflist_and_close)
+        map('n', '<CR>', send_to_qflist_and_close)
+        return true
+      end
   }
 end
 vim.api.nvim_create_user_command('SearchCurrentLine', SearchCurrentLine, {})
