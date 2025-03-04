@@ -633,12 +633,8 @@ end
 -- Create a Vim command to call the function
 vim.api.nvim_create_user_command('VisualCodeBlock', VisualCodeBlock, {})
 
-
--- WIP
-
 -- Navigate to next/previous file
 _G.GotoNextFile = function(jump)
-  -- Get the current file name
   local full_path = vim.api.nvim_buf_get_name(0)
   local current_filename = vim.fn.fnamemodify(full_path, ":t")
 
@@ -661,21 +657,16 @@ _G.GotoNextFile = function(jump)
   end
   vim.api.nvim_command('e ' .. t[file_idx])
 end
-
-vim.api.nvim_set_keymap('n', '[l', ':lua _G.GotoNextFile(-1)<CR>',
+vim.api.nvim_set_keymap('n', '[f', ':lua _G.GotoNextFile(-1)<CR>',
   { noremap = true, silent = true, desc = 'Open previous file' })
-vim.api.nvim_set_keymap('n', ']l', ':lua _G.GotoNextFile(1)<CR>',
+vim.api.nvim_set_keymap('n', ']f', ':lua _G.GotoNextFile(1)<CR>',
   { noremap = true, silent = true, desc = 'Open next file' })
 
--- Bring up telescope find for all matches to the current line
--- Use `:Telescope live_grep default_text=#\ 241128`.  Note current line needs to be escaped.
--- This will escape an exact string for use in lua: `str:gsub("([^%w])", "%%%1")`
--- Note: there are some additional characters in vim which we do not want to escape (e.g. `:`) add these to the ignored non escaped list.
--- TODO: This should search in the previous files.
-
+-- Search for the current line in all files in the working directory and place
+-- the results in the quick fix list
 function SearchCurrentLine()
   local current_line = vim.fn.getline(".")
-  local full_path = vim.api.nvim_buf_get_name(0)
+  local current_filename = vim.api.nvim_buf_get_name(0)
   require('telescope.builtin').live_grep{
       additional_args = function()
           return { '--sort-files' }
@@ -687,13 +678,13 @@ function SearchCurrentLine()
         local function send_to_qflist_and_close()
           require('telescope.actions').send_to_qflist(prompt_bufnr)
           local qflist = vim.fn.getqflist()
-          print("current file path: " .. full_path)
+          print("current file path: " .. current_filename)
           local target_idx = 1
           for i, item in ipairs(qflist) do
             if item.module then
-              local filename = vim.fn.bufname(item.bufnr)
-              if filename:match(full_path) then
-                print("current file path: " .. full_path .. " found file path: " .. filename .. " index: " .. i)
+              local item_filename = vim.fn.bufname(item.bufnr)
+              if item_filename:match(current_filename) then
+                print("current file path: " .. current_filename .. " found file path: " .. item_filename .. " index: " .. i)
                 target_idx = i
                 break
               end
@@ -712,21 +703,14 @@ vim.api.nvim_create_user_command('SearchCurrentLine', SearchCurrentLine, {})
 vim.api.nvim_set_keymap('n', '<leader>lf', ':SearchCurrentLine<CR>',
   { noremap = true, silent = true, desc = 'Next line repeat' })
 
--- Create a new file with the current date stamp and header this file (do this only if it does not already exist, otherwise open it)
+-- Create a new file with the current date stamp and header this file (do this
+-- only if it does not already exist, otherwise open it)
 function OpenTodaysNotepad()
   vim.api.nvim_command('e ~/sandbox/Notepad/Notes/' .. os.date("%y%m%d") .. ".md")
 end
 vim.api.nvim_create_user_command('OpenTodaysNotepad', OpenTodaysNotepad, {})
 -- vim.api.nvim_set_keymap('n', '<leader>bn', ':OpenTodaysNotepad<CR>',
 --   { noremap = true, silent = true, desc = 'Next line repeat' })
-
-
--- TODO:
--- -[x] Navigate to next previous file
--- -[x] Bring up telescope find for all matches to the current line
--- -[x] Create a new file with the current date stamp and header this file (do this only if it does not already exist, otherwise open it)
-
--- /WIP
 
 vim.api.nvim_set_keymap('n', ']r', ':lua _G.find_duplicate("W")<CR>',
   { noremap = true, silent = true, desc = 'Next line repeat' })
@@ -739,6 +723,12 @@ vim.api.nvim_set_keymap('n', ']b', ':bn<CR>',
 
 vim.api.nvim_set_keymap('n', '[b', ':bp<CR>',
   { noremap = true, silent = true, desc = 'Previous buffer' })
+
+vim.api.nvim_set_keymap('n', ']q', ':cn<CR>',
+  { noremap = true, silent = true, desc = 'Next quick fix item' })
+
+vim.api.nvim_set_keymap('n', '[q', ':cp<CR>',
+  { noremap = true, silent = true, desc = 'Previous quick fix item' })
 
 -- text and markdown specific keybindings
 vim.api.nvim_create_augroup('FileTypeKeybindings', { clear = true })
