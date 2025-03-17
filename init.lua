@@ -662,6 +662,20 @@ vim.api.nvim_set_keymap('n', '[f', ':lua _G.GotoNextFile(-1)<CR>',
   { noremap = true, silent = true, desc = 'Open previous file' })
 vim.api.nvim_set_keymap('n', ']f', ':lua _G.GotoNextFile(1)<CR>',
   { noremap = true, silent = true, desc = 'Open next file' })
+_G.GotoFileIndex = function(index)
+  local i, t, popen = 0, {}, io.popen
+  local pfile = popen('ls .')
+  for filename in pfile:lines() do
+    print(filename .. " " .. i .. " " .. index)
+    if i == index then
+      vim.api.nvim_command('e ' .. filename)
+      return
+    end
+    i = i + 1
+  end
+end
+vim.api.nvim_set_keymap('n', '<leader>bm', ':lua _G.GotoFileIndex(0)<CR>',
+  { noremap = true, silent = true, desc = 'Open first file' })
 
 -- Search for the current line in all files in the working directory and place
 -- the results in the quick fix list
