@@ -519,8 +519,8 @@ vim.api.nvim_set_keymap('n', '<leader>j', '<c-w>s<c-w>j<c-w>J:terminal<CR>',
 vim.api.nvim_set_keymap('n', '<leader>bd', ':bd!<CR>',
   { noremap = true, silent = true, desc = 'Close current buffer' })
 
-vim.api.nvim_set_keymap('n', '<leader>bn', ':e ~/sandbox/Notepad/Notepad.md<CR>',
-  { noremap = true, silent = true, desc = 'Open Notepad' })
+-- vim.api.nvim_set_keymap('n', '<leader>bn', ':e ~/sandbox/Notepad/Notepad.md<CR>',
+--   { noremap = true, silent = true, desc = 'Open Notepad' })
 
 vim.api.nvim_set_keymap('n', '<leader>lr', ':set wrap!<CR>',
   { noremap = true, silent = true, desc = 'Toggle wrap' })
@@ -710,8 +710,8 @@ function OpenTodaysNotepad()
   vim.api.nvim_command('e ~/sandbox/Notepad/Notes/' .. os.date("%y%m%d") .. ".md")
 end
 vim.api.nvim_create_user_command('OpenTodaysNotepad', OpenTodaysNotepad, {})
--- vim.api.nvim_set_keymap('n', '<leader>bn', ':OpenTodaysNotepad<CR>',
---   { noremap = true, silent = true, desc = 'Next line repeat' })
+vim.api.nvim_set_keymap('n', '<leader>bn', ':OpenTodaysNotepad<CR>',
+  { noremap = true, silent = true, desc = 'Next line repeat' })
 
 vim.api.nvim_set_keymap('n', ']r', ':lua _G.find_duplicate("W")<CR>',
   { noremap = true, silent = true, desc = 'Next line repeat' })
