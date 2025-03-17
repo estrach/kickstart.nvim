@@ -486,6 +486,7 @@ vim.api.nvim_set_keymap('n', '<leader>lw', ':set list!<CR>',
 -- Add keymap for display file as syslog
 vim.api.nvim_set_keymap('n', '<leader>lm', ':set filetype=messages<CR>',
   { noremap = true, silent = true, desc = 'Syslog syntax highlight' })
+vim.api.nvim_command('autocmd BufRead,BufNewFile *.log set filetype=messages')
 
 -- Add keymaps for set fold methods
 vim.api.nvim_set_keymap('n', '<leader>zi', ':set foldmethod=indent<CR>',
