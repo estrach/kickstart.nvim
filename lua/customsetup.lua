@@ -424,12 +424,12 @@ vim.opt.cursorlineopt = 'number'
 
 -- [[ Basic Keymaps ]]
 local wk = require('which-key')
-wk.register({
-  ['<leader>c'] = { name = '[C]ode' },
-  ['<leader>d'] = { name = '[D]ocument' },
-  ['<leader>g'] = { name = '[G]it' },
-  ['<leader>h'] = { name = 'More git' },
-  ['<leader>r'] = { name = '[R]ename' },
-  ['<leader>s'] = { name = '[S]earch' },
-  ['<leader>w'] = { name = '[W]orkspace' }
+wk.add({
+  {'<leader>c', desc = '[C]ode' },
+  {'<leader>d', desc = '[D]ocument' },
+  {'<leader>g', desc = '[G]it' },
+  {'<leader>h', desc = 'More git' },
+  {'<leader>r', desc = '[R]ename' },
+  {'<leader>s', desc = '[S]earch' },
+  {'<leader>w', desc = '[W]orkspace' }
 })
