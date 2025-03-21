@@ -311,6 +311,8 @@ function SearchCurrentLine()
           end
           vim.fn.setqflist({}, 'r', { items = qflist, idx = target_idx })
           vim.cmd('cclose')
+          local selected_entry = require('telescope.actions.state').get_selected_entry()
+          vim.cmd('e ' .. selected_entry.value)
         end
         map('i', '<CR>', send_to_qflist_and_close)
         map('n', '<CR>', send_to_qflist_and_close)
