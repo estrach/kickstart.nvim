@@ -609,6 +609,9 @@ mason_lspconfig.setup_handlers {
       on_attach = on_attach,
       settings = servers[server_name],
       filetypes = (servers[server_name] or {}).filetypes,
+      flags = {
+        log_level = vim.log.levels.ERROR,
+      },
     }
   end
 }
