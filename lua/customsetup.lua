@@ -434,3 +434,5 @@ wk.add({
   {'<leader>s', desc = '[S]earch' },
   {'<leader>w', desc = '[W]orkspace' }
 })
+
+vim.keymap.set('n', '<localleader>za', require('simple-zoom').toggle_zoom)
