@@ -130,6 +130,9 @@ vim.api.nvim_set_keymap('n', '<leader>bd', ':bd!<CR>',
 vim.api.nvim_set_keymap('n', '<leader>lr', ':set wrap!<CR>',
   { noremap = true, silent = true, desc = 'Toggle wrap' })
 
+-- Disable default F1 help
+vim.keymap.set('n', '<F1>', ':echo "F1 disabled, use :h for help instead"<CR>', { noremap = true, silent = true })
+
 _G.last_searched_line = nil
 _G.find_duplicate = function(search_direction)
   local current_line = vim.fn.getline(".")
