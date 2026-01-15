@@ -65,10 +65,33 @@ def ExportTicket(ticket):
     Path("Tickets").mkdir(parents=True, exist_ok=True)
     ExtractTicket(ticket, f"Tickets/{ticket}.md", tmp_file)
 
+def ExportDateRange(date_start, date_end, input_dir="~/sandbox/Notepad/Notes", output_file=None):
+    if output_file is None:
+        output_file=f"~/sandbox/Notepad/Notes_{date_start}-{date_end}.md"
+    # TODO: Change to use Pathlib
+    input_dir = os.path.expanduser(input_dir)
+    output_file = os.path.expanduser(output_file)
+    files = os.listdir(input_dir)
+    files.sort()
+    output = False
+    with open(output_file, "w") as f:
+        for file in files:
+            if file == f"{date_start}.md":
+                output = True
+            if not output:
+                continue
+            with open(os.path.join(input_dir, file), "r") as fi:
+                lines = fi.read()
+                f.write(lines)
+            if file == f"{date_end}.md":
+                output = False
+
 if __name__=="__main__":
     parser = argparse.ArgumentParser(prog='NotepadFormatter', description="Format notepad to single file or directory")
     parser.add_argument('--format', choices=['file', 'dir'], help='Convert notes format to \'file\' or \'dir\'[ectory]')
     parser.add_argument('--ticket', type=str, help='Ticket name')
+    parser.add_argument('--range_start', type=str, help='Date range')
+    parser.add_argument('--range_end', type=str, help='Date range')
     args = parser.parse_args()
 
     if args.format == 'file':
@@ -77,3 +100,8 @@ if __name__=="__main__":
         FromSingleFile()
     if args.ticket:
         ExportTicket(args.ticket)
+    if args.range_start and not args.range_end or args.range_end and not args.range_start:
+        print("Start and end range required")
+        exit(1)
+    if args.range_start:
+        ExportDateRange(args.range_start, args.range_end)
