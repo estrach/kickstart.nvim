@@ -78,9 +78,9 @@ def ExportDateRange(date_start: int, date_end: int, input_dir="~/sandbox/Notepad
             date_re = re.search("^\d{6}.md$", file)
             if date_re is None:
                 continue
-            if int(date_re.group(0).strip(".md")) >= date_start and int(date_re.group(0).strip(".md")) <= date_end:
-                print(f"\tWriting file: {file}")
-            else:
+            if int(date_re.group(0).strip(".md")) < date_start:
+                continue
+            if int(date_re.group(0).strip(".md")) > date_end:
                 continue
             with open(os.path.join(input_dir, file), "r") as fi:
                 lines = fi.read()
