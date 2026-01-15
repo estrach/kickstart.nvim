@@ -65,7 +65,7 @@ def ExportTicket(ticket):
     Path("Tickets").mkdir(parents=True, exist_ok=True)
     ExtractTicket(ticket, f"Tickets/{ticket}.md", tmp_file)
 
-def ExportDateRange(date_start, date_end, input_dir="~/sandbox/Notepad/Notes", output_file=None):
+def ExportDateRange(date_start: int, date_end: int, input_dir="~/sandbox/Notepad/Notes", output_file=None):
     if output_file is None:
         output_file=f"~/sandbox/Notepad/Notes_{date_start}-{date_end}.md"
     # TODO: Change to use Pathlib
@@ -73,25 +73,25 @@ def ExportDateRange(date_start, date_end, input_dir="~/sandbox/Notepad/Notes", o
     output_file = os.path.expanduser(output_file)
     files = os.listdir(input_dir)
     files.sort()
-    output = False
     with open(output_file, "w") as f:
         for file in files:
-            if file == f"{date_start}.md":
-                output = True
-            if not output:
+            date_re = re.search("^\d{6}.md$", file)
+            if date_re is None:
+                continue
+            if int(date_re.group(0).strip(".md")) >= date_start and int(date_re.group(0).strip(".md")) <= date_end:
+                print(f"\tWriting file: {file}")
+            else:
                 continue
             with open(os.path.join(input_dir, file), "r") as fi:
                 lines = fi.read()
                 f.write(lines)
-            if file == f"{date_end}.md":
-                output = False
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser(prog='NotepadFormatter', description="Format notepad to single file or directory")
     parser.add_argument('--format', choices=['file', 'dir'], help='Convert notes format to \'file\' or \'dir\'[ectory]')
     parser.add_argument('--ticket', type=str, help='Ticket name')
-    parser.add_argument('--range_start', type=str, help='Date range')
-    parser.add_argument('--range_end', type=str, help='Date range')
+    parser.add_argument('--range_start', type=int, help='Date range')
+    parser.add_argument('--range_end', type=int, help='Date range')
     args = parser.parse_args()
 
     if args.format == 'file':
