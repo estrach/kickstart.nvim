@@ -77,6 +77,9 @@ vim.opt.scrolloff = 5
 -- Default to relative line numbers
 vim.opt.relativenumber = true
 
+-- Highlight column 80 and from 120 onwards
+vim.opt.colorcolumn = "80," .. table.concat(vim.fn.range(120, 999), ",")
+
 -- NOTE: Here is where you install your plugins.
 --  You can configure plugins using the `config` key.
 --
@@ -234,7 +237,6 @@ require('lazy').setup({
     priority = 1000,
     config = function()
       vim.cmd.colorscheme 'onedark'
-      vim.cmd([[let &colorcolumn="80,".join(range(120,999),",")]])
     end,
   },
 
