@@ -139,21 +139,6 @@ vim.o.timeoutlen = 300
 vim.o.splitright = true
 vim.o.splitbelow = true
 
--- Explicitly use ripgrep
-vim.opt.grepprg = 'rg --vimgrep'
-vim.opt.grepformat = '%f:%l:%c:%m'
-
--- disable netrw at the very start of your init.lua
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
--- set termguicolors to enable highlight groups
-vim.opt.termguicolors = true
-vim.opt.spelllang = 'en_us'
-vim.opt.spell = true
-
-vim.opt.colorcolumn = '80,' .. table.concat(vim.fn.range(120, 999), ',')
-
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
@@ -257,6 +242,8 @@ end
 ---@type vim.Option
 local rtp = vim.opt.rtp
 rtp:prepend(lazypath)
+
+require("pre-setup")
 
 -- [[ Configure and install plugins ]]
 --
