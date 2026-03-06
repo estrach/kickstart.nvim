@@ -1,6 +1,7 @@
 return {
   -- File browser
   { 'nvim-tree/nvim-tree.lua' },
+  { 'nvim-tree/nvim-web-devicons', lazy = true },
 
   -- Multi cursor edit
   { 'mg979/vim-visual-multi' },
