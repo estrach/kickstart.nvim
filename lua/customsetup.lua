@@ -66,7 +66,7 @@ vim.cmd.colorscheme "catppuccin"
 -- Git keymaps
 vim.api.nvim_set_keymap('n', '<leader>gb', ':Git blame<CR>',
   { noremap = true, silent = true, desc = 'Git [b]lame' })
-vim.keymap.set('n', '<leader>gs', require('telescope.builtin').git_status, { desc = 'Search [G]it [S]status' })
+vim.keymap.set('n', '<leader>gs', ':Git<CR>', { desc = 'Search [G]it [S]status' })
 vim.api.nvim_set_keymap('n', '<leader>gd', ':Gdiffsplit<CR>',
   { noremap = true, silent = true, desc = 'Git [d]iff tool' })
 vim.api.nvim_set_keymap('n', '<leader>gl', ':Git log<CR>',
