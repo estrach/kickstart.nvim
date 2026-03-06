@@ -275,7 +275,7 @@ require('lazy').setup({
 
   -- File browser
   { 'nvim-tree/nvim-tree.lua' },
-  { 'nvim-tree/nvim-web-devicons', lazy = true },
+  { 'nvim-tree/nvim-web-devicons', enabled = true },
 
   -- Multi cursor edit
   { 'mg979/vim-visual-multi' },
