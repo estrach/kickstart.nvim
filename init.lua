@@ -287,6 +287,19 @@ require('lazy').setup({
     lazy = false,
   },
 
+
+  -- Git related plugins
+  {'tpope/vim-fugitive'},
+  {'tpope/vim-rhubarb'},
+  {'tpope/vim-abolish'},
+  {'tpope/vim-surround'},
+  {'sindrets/diffview.nvim'},
+
+  {'wsdjeg/vim-fetch'},
+
+  -- Detect tabstop and shiftwidth automatically
+  'tpope/vim-sleuth',
+
   -- Box draw
   { 'gyim/vim-boxdraw' },
 
