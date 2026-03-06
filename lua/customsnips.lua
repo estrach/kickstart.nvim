@@ -1,0 +1,84 @@
+local ls = require('luasnip')
+local s = ls.snippet
+local t = ls.text_node
+local f = ls.function_node
+local i = ls.insert_node
+local c = ls.choice_node
+local fmt = require("luasnip.extras.fmt").fmt
+
+local ls = require("luasnip")
+vim.keymap.set({"i", "s"}, "<C-E>", function()
+    if ls.choice_active() then
+        ls.change_choice(1)
+    end
+end, {silent = true})
+
+local function current_date()
+  return os.date("%y%m%d")
+end
+
+ls.add_snippets("all", {
+  s("print_datestamp", {
+    t("# "),
+    f(current_date, {})
+  })
+})
+
+ls.add_snippets("editorconfig", {
+  s("editor_config", {
+			t({"# EditorConfig is awesome: https://EditorConfig.org",
+        "",
+        "# top-most EditorConfig file",
+        "root = true",
+        "",
+        "# Unix-style newlines with a newline ending every file",
+        "[*]",
+        "end_of_line = lf",
+        "insert_final_newline = true",
+        "trim_trailing_whitespace = true",
+        "insert_final_newline = true",
+        "",
+        "# Matches multiple files with brace expansion notation",
+        "# Set default charset",
+        "[*.{js,py}]",
+        "charset = utf-8",
+        "",
+        "# 4 space indentation",
+        "[*.py]",
+        "indent_style = space",
+        "indent_size = 4",
+        "",
+        "# Tab indentation (no size specified)",
+        "[Makefile]",
+        "indent_style = tab",
+        "",
+        "# Indentation override for all JS under lib directory",
+        "[lib/**.js]",
+        "indent_style = space",
+        "indent_size = 2",
+        "",
+        "# Matches the exact files either package.json or .travis.yml",
+        "[{package.json,.travis.yml}]",
+        "indent_style = space",
+        "indent_size = 2"
+    }),
+  }),
+})
+
+local syslog_snippet = s("syslog", fmt(
+    [[
+    {}"[euan] %s, %s, %s, %s, %d{}", __DATE__, __TIME__, __FILE__, __FUNCTION__, __LINE__{});
+    ]], {
+      c(3, {
+        t('syslog(LOG_ERR, '),
+        t('log_err('),
+        t('Log(log_ERROR, '),
+        t('printk(KERN_ALERT ') -- TODO: printk needs to remove __DATE__ and __TIME__
+      }),
+      i(1),
+      i(2)
+    }
+))
+
+ls.add_snippets("cpp", { syslog_snippet })
+ls.add_snippets("c", { syslog_snippet })

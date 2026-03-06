@@ -139,6 +139,21 @@ vim.o.timeoutlen = 300
 vim.o.splitright = true
 vim.o.splitbelow = true
 
+-- Explicitly use ripgrep
+vim.opt.grepprg = 'rg --vimgrep'
+vim.opt.grepformat = '%f:%l:%c:%m'
+
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- set termguicolors to enable highlight groups
+vim.opt.termguicolors = true
+vim.opt.spelllang = 'en_us'
+vim.opt.spell = true
+
+vim.opt.colorcolumn = '80,' .. table.concat(vim.fn.range(120, 999), ',')
+
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
@@ -258,6 +273,99 @@ require('lazy').setup({
   -- NOTE: Plugins can be added via a link or github org/name. To run setup automatically, use `opts = {}`
   { 'NMAC427/guess-indent.nvim', opts = {} },
 
+  -- File browser
+  { 'nvim-tree/nvim-tree.lua' },
+  { 'nvim-tree/nvim-web-devicons', lazy = true },
+
+  -- Multi cursor edit
+  { 'mg979/vim-visual-multi' },
+
+  -- Toggle comments
+  {
+    'numToStr/Comment.nvim',
+    opts = {},
+    lazy = false,
+  },
+
+  -- Box draw
+  { 'gyim/vim-boxdraw' },
+
+  -- Detour: open temporary browsing popup window
+  { 'carbon-steel/detour.nvim', config = function() vim.keymap.set('n', '<c-w><enter>', ':Detour<cr>') end },
+
+  -- Table mode
+  { 'dhruvasagar/vim-table-mode' },
+
+  -- Add formatting supports
+  { 'sbdchd/neoformat' },
+
+  -- Add linting support
+  { 'dense-analysis/ale' },
+
+  -- UI theme
+  { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
+
+  -- Lua Line setup
+  {
+    -- Set lualine as statusline
+    'nvim-lualine/lualine.nvim',
+    -- See `:help lualine.txt`
+    opts = {
+      options = {
+        icons_enabled = true,
+        theme = 'auto',
+        component_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
+        disabled_filetypes = {
+          statusline = {},
+          winbar = {},
+        },
+        ignore_focus = {},
+        always_divide_middle = true,
+        globalstatus = false,
+        refresh = {
+          statusline = 1000,
+          tabline = 1000,
+          winbar = 1000,
+        },
+        sections = {
+          lualine_a = { 'mode' },
+          lualine_b = { 'branch', 'diff', 'diagnostics' },
+          lualine_c = { 'filename' },
+          lualine_x = { 'encoding', 'fileformat', 'filetype' },
+          lualine_y = { 'progress' },
+          lualine_z = { 'location' },
+        },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = { 'filename' },
+          lualine_x = { 'location' },
+          lualine_y = {},
+          lualine_z = {},
+        },
+        tabline = {},
+        winbar = {},
+        inactive_winbar = {},
+        extensions = {},
+      },
+    },
+  },
+
+  -- Add doxygen support
+  {
+    'danymat/neogen',
+    config = true,
+  },
+
+  -- Toggle zoom pane
+  {
+    'fasterius/simple-zoom.nvim',
+    opts = {
+      hide_tabline = true,
+    },
+  },
+
   -- Alternatively, use `config = function() ... end` for full control over the configuration.
   -- If you prefer to call `setup` explicitly, use:
   --    {
@@ -286,6 +394,23 @@ require('lazy').setup({
         topdelete = { text = '‾' }, ---@diagnostic disable-line: missing-fields
         changedelete = { text = '~' }, ---@diagnostic disable-line: missing-fields
       },
+      -- Jump to next/previous change in current file.
+      on_attach = function(bufnr)
+        vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
+
+        -- don't override the built-in and fugitive keymaps
+        local gs = package.loaded.gitsigns
+        vim.keymap.set({ 'n', 'v' }, ']c', function()
+          if vim.wo.diff then return ']c' end
+          vim.schedule(function() gs.next_hunk() end)
+          return '<Ignore>'
+        end, { expr = true, buffer = bufnr, desc = 'Jump to next hunk' })
+        vim.keymap.set({ 'n', 'v' }, '[c', function()
+          if vim.wo.diff then return '[c' end
+          vim.schedule(function() gs.prev_hunk() end)
+          return '<Ignore>'
+        end, { expr = true, buffer = bufnr, desc = 'Jump to previous hunk' })
+      end,
     },
   },
 
@@ -952,4 +1077,7 @@ require('lazy').setup({
 })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
+-- vim: ts=9 sts=2 sw=2 et
+
+require 'customsnips'
+require 'customsetup'
