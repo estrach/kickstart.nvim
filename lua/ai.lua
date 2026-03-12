@@ -53,12 +53,18 @@ return {{
       local home_ip = handle:read("*a")
       home_ip = home_ip:gsub("%s+$", "")
       handle:close()
+      -- Check if the file is present and contains a valid IP
+      if not home_ip or home_ip == "" then
+        home_ip = "192.168.1.158:11434"
+      else
+        home_ip = home_ip .. ':5265'
+      end
       return {
         provider = "ollama",
         providers = {
           ollama = {
-                    endpoint = 'http://' .. home_ip .. ':5265',
-                    model = 'qwen2.5-coder:7b',
+            endpoint = 'http://' .. home_ip,
+            model = 'qwen2.5-coder:7b',
             is_env_set = require("avante.providers.ollama").check_endpoint_alive,
           },
         },
