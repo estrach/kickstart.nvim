@@ -3,6 +3,8 @@ return {
   { 'nvim-tree/nvim-tree.lua' },
   { 'nvim-tree/nvim-web-devicons', lazy = true },
 
+  { 'nvim-treesitter/nvim-treesitter-context' },
+
   -- Multi cursor edit
   { 'mg979/vim-visual-multi' },
 
