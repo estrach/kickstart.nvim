@@ -439,3 +439,23 @@ wk.add({
 })
 
 vim.keymap.set('n', '<localleader>za', require('simple-zoom').toggle_zoom)
+
+local function any_window_in_diff()
+  for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+    if vim.wo[win].diff then
+      return true
+    end
+  end
+  return false
+end
+
+function _G.DiffToggle()
+  if any_window_in_diff() then
+    vim.cmd('windo diffoff')
+  else
+    vim.cmd('windo diffthis')
+  end
+end
+
+vim.api.nvim_create_user_command('DiffToggle', _G.DiffToggle, {})
+vim.keymap.set('n', '<leader>ld', ':DiffToggle<CR>', { silent = true, desc = 'Toggle diff for all windows' })
