@@ -438,7 +438,7 @@ wk.add({
   {'<leader>w', desc = '[W]orkspace' }
 })
 
-vim.keymap.set('n', '<localleader>za', require('simple-zoom').toggle_zoom)
+vim.keymap.set('n', '<C-w>z', require('simple-zoom').toggle_zoom, { desc = 'Toggle zoom window' })
 
 local function any_window_in_diff()
   for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
