@@ -284,49 +284,6 @@ end
 vim.api.nvim_set_keymap('n', '<leader>bm', ':lua _G.GotoFileIndex(0)<CR>',
   { noremap = true, silent = true, desc = 'Open first file' })
 
--- Search for the current line in all files in the working directory and place
--- the results in the quick fix list
-function SearchCurrentLine()
-  local current_line = vim.fn.getline(".")
-  local current_filename = vim.api.nvim_buf_get_name(0)
-  require('telescope.builtin').live_grep{
-      additional_args = function()
-          return { '--sort-files' }
-      end,
-      default_text = current_line,
-
-      -- Send the results to the quick fix list on close with RETURN
-      attach_mappings = function(prompt_bufnr, map)
-        local function send_to_qflist_and_close()
-          require('telescope.actions').send_to_qflist(prompt_bufnr)
-          local qflist = vim.fn.getqflist()
-          print("current file path: " .. current_filename)
-          local target_idx = 1
-          for i, item in ipairs(qflist) do
-            if item.module then
-              local item_filename = vim.fn.bufname(item.bufnr)
-              if item_filename:match(current_filename) then
-                print("current file path: " .. current_filename .. " found file path: " .. item_filename .. " index: " .. i)
-                target_idx = i
-                break
-              end
-            end
-          end
-          vim.fn.setqflist({}, 'r', { items = qflist, idx = target_idx })
-          vim.cmd('cclose')
-          local selected_entry = require('telescope.actions.state').get_selected_entry()
-          vim.cmd('e ' .. selected_entry.value)
-        end
-        map('i', '<CR>', send_to_qflist_and_close)
-        map('n', '<CR>', send_to_qflist_and_close)
-        return true
-      end
-  }
-end
-vim.api.nvim_create_user_command('SearchCurrentLine', SearchCurrentLine, {})
-vim.api.nvim_set_keymap('n', '<leader>lf', ':SearchCurrentLine<CR>',
-  { noremap = true, silent = true, desc = 'Next line repeat' })
-
 -- Create a new file with the current date stamp and header this file (do this
 -- only if it does not already exist, otherwise open it)
 function OpenTodaysNotepad()

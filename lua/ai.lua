@@ -50,13 +50,11 @@ return {{
     opts = function()
       local ollama = require("avante.providers.ollama")
       local handle = io.popen("cat ~/sandbox/HOME_IP")
-      local home_ip = handle:read("*a")
-      home_ip = home_ip:gsub("%s+$", "")
-      handle:close()
-      -- Check if the file is present and contains a valid IP
-      if not home_ip or home_ip == "" then
-        home_ip = "192.168.1.158:11434"
-      else
+      local home_ip = "192.168.1.158:11434"
+      if handle then
+        local home_ip = handle:read("*a")
+        home_ip = home_ip:gsub("%s+$", "")
+        handle:close()
         home_ip = home_ip .. ':5265'
       end
       return {

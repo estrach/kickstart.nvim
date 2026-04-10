@@ -26,13 +26,7 @@ return {
   {'wsdjeg/vim-fetch'},
 
   -- Detect tabstop and shiftwidth automatically
-  'tpope/vim-sleuth',
-
-  -- Box draw
-  { 'gyim/vim-boxdraw' },
-
-  -- Detour: open temporary browsing popup window
-  { 'carbon-steel/detour.nvim', config = function() vim.keymap.set('n', '<c-w><enter>', ':Detour<cr>') end },
+  { 'tpope/vim-sleuth' },
 
   -- Table mode
   { 'dhruvasagar/vim-table-mode' },
