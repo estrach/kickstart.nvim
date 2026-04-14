@@ -49,13 +49,17 @@ return {{
   },
     opts = function()
       local ollama = require("avante.providers.ollama")
-      local handle = io.popen("cat ~/sandbox/HOME_IP")
-      local home_ip = "192.168.1.158:11434"
-      if handle then
-        local home_ip = handle:read("*a")
-        home_ip = home_ip:gsub("%s+$", "")
-        handle:close()
+      local path = vim.fn.expand '~/sandbox/HOME_IP'
+      local default_value = '192.168.1.158:11434'
+      local file = io.open(path, 'r')
+      local home_ip
+      if file then
+        home_ip = file:read '*a'
+        home_ip = home_ip:gsub('%s+$', '')
+        file:close()
         home_ip = home_ip .. ':5265'
+      else
+        home_ip = default_value
       end
       return {
         provider = "ollama",
