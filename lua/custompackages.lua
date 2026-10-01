@@ -15,15 +15,14 @@ return {
     lazy = false,
   },
 
-
   -- Git related plugins
-  {'tpope/vim-fugitive'},
-  {'tpope/vim-rhubarb'},
-  {'tpope/vim-abolish'},
-  {'tpope/vim-surround'},
-  {'sindrets/diffview.nvim'},
+  { 'tpope/vim-fugitive' },
+  { 'tpope/vim-rhubarb' },
+  { 'tpope/vim-abolish' },
+  { 'tpope/vim-surround' },
+  { 'sindrets/diffview.nvim' },
 
-  {'wsdjeg/vim-fetch'},
+  { 'wsdjeg/vim-fetch' },
 
   -- Detect tabstop and shiftwidth automatically
   { 'tpope/vim-sleuth' },
