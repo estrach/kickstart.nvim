@@ -67,7 +67,7 @@ ls.add_snippets("editorconfig", {
 
 local syslog_snippet = s("syslog", fmt(
     [[
-    {}"[euan] %s, %s, %s, %s, %d{}", __DATE__, __TIME__, __FILE__, __FUNCTION__, __LINE__{});
+    {}"[euan] %s, %s, %s, %s, %d{}", __DATE__, __TIME__, __FILE__, __FUNCTION__, __LINE__ {});
     ]], {
       c(3, {
         t('syslog(LOG_ERR, '),
