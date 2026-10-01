@@ -364,6 +364,9 @@ vim.api.nvim_create_user_command('TogglePlaintext', TogglePlaintext, {})
 vim.api.nvim_set_keymap('n', '<leader>ls', ':TogglePlaintext<CR>',
   { noremap = true, silent = true, desc = 'Toggle plain text' })
 
+vim.api.nvim_set_keymap('n', '<leader>lz', ":set number! relativenumber! | SimpleZoomToggle<CR>: Gitsigns toggle_signs<CR>",
+  { noremap = true, silent = true, desc = 'Toggle raw text' })
+
 -- Change colorscheme
 function ToggleColorScheme()
   if vim.g.colors_name == 'catppuccin-mocha' then
