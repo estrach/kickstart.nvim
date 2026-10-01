@@ -100,6 +100,5 @@ return {
     },
   },
 
-  require("ai")
-
+  require 'ai',
 }

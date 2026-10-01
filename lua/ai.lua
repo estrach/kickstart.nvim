@@ -1,75 +1,49 @@
-return {{
-  "yetone/avante.nvim",
-  -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-  -- ⚠️  must add this setting! ! !
-  build = vim.fn.has("win32") ~= 0
-      and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
-      or "make",
-  event = "VeryLazy",
-  version = false, -- Never set this value to "*"! Never!
-  ---@module 'avante'
-  ---@type avante.Config
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    "MunifTanjim/nui.nvim",
-    --- The below dependencies are optional,
-    "nvim-mini/mini.pick", -- for file_selector provider mini.pick
-    "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-    "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
-    "ibhagwan/fzf-lua", -- for file_selector provider fzf
-    "stevearc/dressing.nvim", -- for input provider dressing
-    "folke/snacks.nvim", -- for input provider snacks
-    "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-    "zbirenbaum/copilot.lua", -- for providers='copilot'
-    {
-      -- support for image pasting
-      "HakonHarnes/img-clip.nvim",
-      event = "VeryLazy",
-      opts = {
-        -- recommended settings
-        default = {
-          embed_image_as_base64 = false,
-          prompt_for_file_name = false,
-          drag_and_drop = {
-            insert_mode = true,
-          },
-          -- required for Windows users
-          use_absolute_path = true,
-        },
-      },
+return {
+  {
+    'coder/claudecode.nvim',
+    dependencies = { 'folke/snacks.nvim' },
+    opts = {
+      terminal_cmd = '~/.local/bin/claude', -- Point to local installation
     },
-    {
-      -- Make sure to set this up properly if you have lazy=true
-      'MeanderingProgrammer/render-markdown.nvim',
-      opts = {
-        file_types = { "markdown", "Avante" },
+    config = true,
+    -- `cmd` lets lazy.nvim create command stubs that load the plugin on first use,
+    -- so `:ClaudeCode` and friends work on a fresh start. Without it, a keys-only
+    -- spec defers loading until a <leader>a* mapping is pressed and the commands
+    -- would not exist yet.
+    cmd = {
+      'ClaudeCode',
+      'ClaudeCodeFocus',
+      'ClaudeCodeSelectModel',
+      'ClaudeCodeAdd',
+      'ClaudeCodeSend',
+      'ClaudeCodeTreeAdd',
+      'ClaudeCodeStatus',
+      'ClaudeCodeStart',
+      'ClaudeCodeStop',
+      'ClaudeCodeOpen',
+      'ClaudeCodeClose',
+      'ClaudeCodeDiffAccept',
+      'ClaudeCodeDiffDeny',
+      'ClaudeCodeCloseAllDiffs',
+    },
+    keys = {
+      { '<leader>a', nil, desc = 'AI/Claude Code' },
+      { '<leader>ac', '<cmd>ClaudeCode<cr>', desc = 'Toggle Claude' },
+      { '<leader>af', '<cmd>ClaudeCodeFocus<cr>', desc = 'Focus Claude' },
+      { '<leader>ar', '<cmd>ClaudeCode --resume<cr>', desc = 'Resume Claude' },
+      { '<leader>aC', '<cmd>ClaudeCode --continue<cr>', desc = 'Continue Claude' },
+      { '<leader>am', '<cmd>ClaudeCodeSelectModel<cr>', desc = 'Select Claude model' },
+      { '<leader>ab', '<cmd>ClaudeCodeAdd %<cr>', desc = 'Add current buffer' },
+      { '<leader>as', '<cmd>ClaudeCodeSend<cr>', mode = 'v', desc = 'Send to Claude' },
+      {
+        '<leader>as',
+        '<cmd>ClaudeCodeTreeAdd<cr>',
+        desc = 'Add file',
+        ft = { 'NvimTree', 'neo-tree', 'oil', 'minifiles', 'netrw', 'snacks_picker_list' },
       },
-      ft = { "markdown", "Avante" },
+      -- Diff management
+      { '<leader>aa', '<cmd>ClaudeCodeDiffAccept<cr>', desc = 'Accept diff' },
+      { '<leader>ad', '<cmd>ClaudeCodeDiffDeny<cr>', desc = 'Deny diff' },
     },
   },
-    opts = function()
-      local ollama = require("avante.providers.ollama")
-      local path = vim.fn.expand '~/sandbox/HOME_IP'
-      local default_value = '192.168.1.158:11434'
-      local file = io.open(path, 'r')
-      local home_ip
-      if file then
-        home_ip = file:read '*a'
-        home_ip = home_ip:gsub('%s+$', '')
-        file:close()
-        home_ip = home_ip .. ':5265'
-      else
-        home_ip = default_value
-      end
-      return {
-        provider = "ollama",
-        providers = {
-          ollama = {
-            endpoint = 'http://' .. home_ip,
-            model = 'qwen2.5-coder:7b',
-            is_env_set = require("avante.providers.ollama").check_endpoint_alive,
-          },
-        },
-      }
-    end,
-}}
+}
